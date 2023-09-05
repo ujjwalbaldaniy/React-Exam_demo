@@ -29,7 +29,6 @@ const inputs = [
     },
 ]
 
-
 const SignUp = () => {
     const [signupField, setSignupField] = useState({
         name: "",
@@ -49,12 +48,12 @@ const SignUp = () => {
     const handleSignupSubmit = (e) => {
         e.preventDefault()
         if (signupField.name && signupField.email && signupField.password && signupField.role) {
-            e.preventDefault()
             console.log(signupField);
-            // debugger
+
             postSignupData(signupField)
                 .then((res) => console.log(res))
                 .catch((error) => console.log(error))
+
             setSignupField({
                 name: "",
                 email: "",
@@ -66,7 +65,15 @@ const SignUp = () => {
 
     return (
         <>
-            <Form handleChange={handleSignupChange} handleSubmit={handleSignupSubmit} inputField={signupField} inputs={inputs} titleName={"Sign Up"} />
+            <div className="employee-form">
+                <div className="login_container">
+                    <h1 className="login_title">Sign Up</h1>
+                    <form className="login_form" onSubmit={handleSignupSubmit}>
+                        <Form handleChange={handleSignupChange} inputField={signupField} inputs={inputs} />
+                        <button type="submit" className="login_btn">Submit</button>
+                    </form>
+                </div>
+            </div>
         </>
     )
 };
