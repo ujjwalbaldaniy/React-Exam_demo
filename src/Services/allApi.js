@@ -3,14 +3,6 @@ import createApi from "./createApi";
 
 // **************** USER API **************** //
 
-const postSigninData = (value) => {
-  return createApi.post("/users/Login", JSON.stringify(value));
-};
-
-const postSignupData = (value) => {
-  return createApi.post("/users/SignUp", JSON.stringify(value));
-};
-
 const forgotPassword = (value) => {
   return createApi.post("/users/ForgotPassword", JSON.stringify(value));
 };
@@ -28,10 +20,15 @@ const showAllStudentData = () => {
   return createApi.get("/dashboard/Teachers", { headers: authHeader() });
 };
 
+// **************** STUDENT API **************** //
+
+const allExamForStudent = () => {
+  return createApi.get("/student/studentExam", { headers: authHeader() });
+};
+
 export {
-  postSigninData,
-  postSignupData,
   forgotPassword,
   confirmPassword,
   showAllStudentData,
+  allExamForStudent,
 };

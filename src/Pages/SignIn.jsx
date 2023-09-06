@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import Form from "../Components/Form";
-import { postSigninData } from "../Services/allApi";
-import { useNavigate } from "react-router-dom";
+import { Link, NavLink, useNavigate } from "react-router-dom";
+import { postSigninData } from "../auth/authService";
 
 const inputs = [
     {
@@ -33,21 +33,25 @@ const SignIn = () => {
         })
     }
 
-    const handleSigninSubmit = (e) => {
+    const handleSigninSubmit = async (e) => {
         e.preventDefault()
         if (signinField.email && signinField.password) {
             console.log(signinField);
-
-            postSigninData(signinField)
-                .then((res) => {
-                    console.log(res)
-                    console.log(res.data.data.token)
-                    if (res.data.data.token) {
-                        localStorage.setItem('user', JSON.stringify(res.data.data))
-                    }
-                    return res.data.data
-                })
-                .catch((error) => console.log(error))
+            try {
+                await postSigninData(signinField)
+                    .then(() => {
+                        const localStorageData = JSON.parse(localStorage.getItem("user"));
+                        if (localStorageData.role === "teacher") {
+                            navigate('/teacherPage')
+                        } else if (localStorageData.role === "student") {
+                            navigate('/studentPage')
+                        }
+                    }).catch((error) => {
+                        console.log(error);
+                    })
+            } catch (error) {
+                console.log(error);
+            }
 
             setSigninField({
                 email: "",
@@ -63,9 +67,11 @@ const SignIn = () => {
                     <h1 className="login_title">Sign In</h1>
                     <form className="login_form" onSubmit={handleSigninSubmit}>
                         <Form handleChange={handleSigninChange} inputField={signinField} inputs={inputs} />
-                        <p onClick={() => navigate('/forgotPassword')} style={{ cursor: 'pointer' }}>Forgot your password?</p>
+                        <Link to='/forgotPassword' style={{ cursor: 'pointer' }}>Forgot your password?</Link>
                         <button type="submit" className="login_btn">Submit</button>
                     </form>
+
+                    <p style={{ cursor: 'pointer', marginTop: '2rem' }}>Don't have an account? <NavLink to='/signup'>Signup hear</NavLink></p>
                 </div>
             </div>
         </>
