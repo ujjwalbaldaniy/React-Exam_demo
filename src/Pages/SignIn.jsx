@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import Form from "../Components/Form";
 import { Link, NavLink, useNavigate } from "react-router-dom";
-import { postSigninData } from "../auth/authService";
 import { toast } from "react-toastify";
+import { postSigninData } from "../Services/allApi";
 
 const inputs = [
     {
@@ -34,27 +34,34 @@ const SignIn = () => {
         })
     }
 
-    const handleSigninSubmit = async (e) => {
+    const handleSigninSubmit = (e) => {
         e.preventDefault()
         if (signinField.email && signinField.password) {
             console.log(signinField);
-            try {
-                await postSigninData(signinField)
-                    .then(() => {
-                        const localStorageData = JSON.parse(localStorage.getItem("user"));
-                        if (localStorageData.role === "teacher") {
-                            toast.success("Login Successful")
-                            navigate('/teacherDeshboard')
-                        } else if (localStorageData.role === "student") {
-                            toast.success("Login Successful")
-                            navigate('/studentPage')
+
+            postSigninData(signinField)
+                .then((res) => {
+                    console.log(res);
+                    if (res.data.statusCode === 500) {
+                        toast.error(res.data.message)
+                    } else {
+                        if (res.data.data.token) {
+                            localStorage.setItem("user", JSON.stringify(res.data.data));
+                            if (res.data.data.role === "teacher") {
+                                toast.success(res.data.message)
+                                navigate('/teacherDeshboard')
+                            } else if (res.data.data.role === "student") {
+                                toast.success(res.data.message)
+                                navigate('/studentPage')
+                            }
+                        } else {
+                            return res.data.data;
                         }
-                    }).catch((error) => {
-                        console.log(error);
-                    })
-            } catch (error) {
-                console.log(error);
-            }
+                    }
+                }).catch((error) => {
+                    console.log(error);
+                    toast.error(error.message)
+                })
 
             setSigninField({
                 email: "",

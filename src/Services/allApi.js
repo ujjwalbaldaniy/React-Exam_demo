@@ -3,6 +3,14 @@ import createApi from "./createApi";
 
 // **************** USER API **************** //
 
+const postSigninData = (value) => {
+  return createApi.post("/users/Login", JSON.stringify(value));
+};
+
+const postSignupData = (value) => {
+  return createApi.post("/users/SignUp", JSON.stringify(value));
+};
+
 const forgotPassword = (value) => {
   return createApi.post("/users/ForgotPassword", JSON.stringify(value));
 };
@@ -45,6 +53,8 @@ const allExamForStudent = () => {
 };
 
 export {
+  postSigninData,
+  postSignupData,
   forgotPassword,
   confirmPassword,
   userResetPassword,
