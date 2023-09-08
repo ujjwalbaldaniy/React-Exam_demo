@@ -1,0 +1,35 @@
+.teacher_sidebar {
+    background-color: #10558d;
+    height: 92vh;
+    width: 15%;
+    position: fixed;
+    top: 8vh;
+    left: 0;
+}
+
+.teacher_sidebar ul {
+    margin-top: 1rem;
+}
+
+.teacher_sidebar ul li a {
+    display: block;
+    padding: 20px 40px;
+    color: white;
+    font-size: 16px;
+    position: relative;
+    font-size: 1.1rem;
+}
+
+.teacher_sidebar ul li a:hover {
+    color: #0c7db1;
+    background: white;
+    border-right: 2px solid #10558d;
+}
+
+.teacher_mainbar {
+    margin: 4% 0 0 15%;
+}
+
+.active {
+    background-color: #0c7db1;
+}

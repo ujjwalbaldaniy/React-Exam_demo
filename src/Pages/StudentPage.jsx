@@ -4,6 +4,24 @@ import { allExamForStudent } from "../Services/allApi";
 const StudentPage = () => {
   const [examforStudent, setExamforStudent] = useState([]);
 
+  const studnetTableList = [
+    {
+      name: "Subject Name"
+    },
+    {
+      name: "Email"
+    },
+    {
+      name: "Notes"
+    },
+    {
+      name: "Id"
+    },
+    {
+      name: "Result"
+    },
+  ]
+
   useEffect(() => {
     allExamForStudent()
       .then((res) => {
@@ -21,11 +39,9 @@ const StudentPage = () => {
         <table>
           <thead>
             <tr>
-              <th>Subject Name</th>
-              <th>Email</th>
-              <th>Notes</th>
-              <th>Id</th>
-              <th>Result</th>
+              {studnetTableList.map((element, index) => (
+                <th key={index}>{element.name}</th>
+              ))}
             </tr>
           </thead>
           <tbody>

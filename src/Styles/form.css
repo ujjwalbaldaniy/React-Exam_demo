@@ -1,17 +1,14 @@
 .employee-form {
     display: flex;
-    /* align-items: center; */
     justify-content: center;
     width: 100%;
-    margin-top: 3rem;
-    /* height: 100vh; */
+    position: relative;
+    top: 15vh;
 }
 
 .login_container {
-    /* margin-top: 7rem; */
     background-color: aliceblue;
     width: 500px;
-    /* height: 430px; */
     display: flex;
     align-items: center;
     flex-direction: column;
@@ -22,7 +19,6 @@
 }
 
 .login_title {
-    /* margin-bottom: 1rem; */
     text-align: center;
     color: #0c7db1;
 }
@@ -66,18 +62,14 @@
     cursor: pointer;
 }
 
-/* button:disabled {
-    opacity: 0.6;
-    cursor: not-allowed;
-} */
-
-.navigate_btn{
+.navigate_btn {
     width: 100%;
     display: flex;
     align-items: center;
     justify-content: space-around;
 }
-.navigate_sign_btn{
+
+.navigate_sign_btn {
     width: 40%;
     margin-top: 1.5rem;
     padding: 0.6rem 0;
@@ -90,21 +82,8 @@
     border-radius: 5px;
     cursor: pointer;
 }
-/* .navigate_btn{
-    width: 40%;
-    margin-top: 1.5rem;
-    padding: 0.6rem 0;
-    background-color: #10558d;
-    border: none;
-    outline: none;
-    color: white;
-    font-size: 1.1rem;
-    font-weight: bold;
-    border-radius: 5px;
-    cursor: pointer;
-} */
 
-.select_dropdown{
+.select_dropdown {
     width: 100%;
     padding: 0.7rem 1rem;
     border: 1px solid black;
@@ -113,4 +92,5 @@
     border-radius: 3px;
     background-color: transparent;
     font-size: 15px;
+    margin-top: 8px;
 }

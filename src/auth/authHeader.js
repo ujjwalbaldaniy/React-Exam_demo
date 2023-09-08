@@ -1,6 +1,6 @@
 const authHeader = () => {
   const localStorageData = JSON.parse(localStorage.getItem("user"));
-  console.log(localStorageData);
+  // console.log(localStorageData);
   // return { "access-token": localStorageData.token };
 
   if (localStorageData && localStorageData.token) {

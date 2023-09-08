@@ -1,0 +1,23 @@
+.teacher_container {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
+
+.studentData_container h1 {
+    text-align: center;
+    margin: 20px 0;
+}
+
+table,
+th,
+td {
+    border: 1px solid black;
+}
+
+th,
+td {
+    text-align: center;
+    padding: 0.7rem 1.5rem;
+    font-size: 15px;
+}

@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import Form from "../Components/Form";
 import { NavLink, useNavigate } from "react-router-dom";
 import { postSignupData } from "../auth/authService";
+import { toast } from "react-toastify";
 
 const inputs = [
     {
@@ -21,6 +22,24 @@ const inputs = [
         type: "password",
         placeholder: "password",
         lable: "Password :- "
+    },
+]
+
+const dropdownList = [
+    {
+        name: "Select user",
+        value: 'DEFAULT',
+        disabled: true
+    },
+    {
+        name: "teacher",
+        value: 'teacher',
+        disabled: false
+    },
+    {
+        name: "student",
+        value: 'student',
+        disabled: false
     },
 ]
 
@@ -53,8 +72,10 @@ const SignUp = () => {
                     .then((res) => {
                         const localStorageData = JSON.parse(localStorage.getItem("user"));
                         if (localStorageData.role === "teacher") {
-                            navigate('/teacherPage')
+                            toast.success("Signup Successful")
+                            navigate('/teacherDeshboard')
                         } else if (localStorageData.role === "student") {
+                            toast.success("Signup Successful")
                             navigate('/studentPage')
                         }
                     })
@@ -79,9 +100,9 @@ const SignUp = () => {
                     <form className="login_form" onSubmit={handleSignupSubmit}>
                         <Form handleChange={handleSignupChange} inputField={signupField} inputs={inputs} />
                         <select value={dropdown.role} onChange={(e) => setDropdown(e.target.value)} defaultValue={'DEFAULT'} className="select_dropdown" >
-                            <option value='DEFAULT' disabled>Select user</option>
-                            <option value="teacher" >teacher</option>
-                            <option value="student">student</option>
+                            {dropdownList.map((element, index) => (
+                                <option key={index + 1} {...element}>{element.name}</option>
+                            ))}
                         </select>
                         <button type="submit" className="login_btn">Submit</button>
                     </form>

@@ -1,0 +1,28 @@
+.singleData_container {
+    display: flex;
+    justify-content: center;
+    margin-top: 2rem;
+}
+
+.singleData_info {
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    width: 400px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    margin-right: 5rem;
+}
+
+.avatar_image {
+    width: 120px;
+}
+
+.singleData_div {
+    padding: 1rem 0;
+}
+
+.singleData_exam h1 {
+    text-align: center;
+    padding-bottom: 2rem;
+}

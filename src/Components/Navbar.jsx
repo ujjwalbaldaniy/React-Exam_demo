@@ -1,11 +1,13 @@
 import React from "react";
 import "../Styles/navbar.css"
 import { Link, Outlet, useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 const Navbar = () => {
     const navigate = useNavigate()
     const handleLogout = () => {
         localStorage.removeItem('user')
+        toast.info("Logout")
         navigate('/signin')
     }
     let data = JSON.parse(localStorage.getItem("user"));
@@ -14,9 +16,10 @@ const Navbar = () => {
         <>
             <div className="navbar">
                 <div className="logo">
-                    {data && data.role === "teacher" ? <Link to="/teacherPage">Teacher Module</Link> : data && data.role === "student" ? <Link to="/studentPage">Student Module</Link> : <Link>Module</Link>}
+                    {data && data.role === "teacher" ? <Link to="/teacherDeshboard">Teacher Module</Link> : data && data.role === "student" ? <Link to="/studentPage">Student Module</Link> : <Link to="/signin">Module</Link>}
                 </div>
                 {data ? <div className="logout">
+                    <h3 className="userName">Hello {data.name}</h3>
                     <h2 onClick={handleLogout}>Log Out</h2>
                 </div> : <div className="menu">
                     <ul>

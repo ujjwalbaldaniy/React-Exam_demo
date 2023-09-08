@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import Form from "../Components/Form";
 import { forgotPassword } from "../Services/allApi";
+import { toast } from "react-toastify";
 
 const forgotPasswordListData = [
     {
@@ -34,8 +35,14 @@ const ForgotPassword = () => {
             })
 
             forgotPassword(forgotPwField)
-                .then((res) => console.log(res))
-                .catch((error) => console.log(error))
+            .then((res) => {
+                console.log(res)
+                toast.success(res.data.message)
+            })
+            .catch((error) => {
+                console.log(error)
+                toast.error(error.response.data.message)
+            })
         }
     }
 

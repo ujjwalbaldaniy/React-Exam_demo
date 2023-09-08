@@ -14,10 +14,28 @@ const confirmPassword = (token, value) => {
   );
 };
 
+const userResetPassword = (value) => {
+  return createApi.post("/users/ResetPassword", JSON.stringify(value), {
+    headers: authHeader(),
+  });
+};
+
 // **************** TEACHER API **************** //
 
 const showAllStudentData = () => {
   return createApi.get("/dashboard/Teachers", { headers: authHeader() });
+};
+
+const verifiedStudentDataForGiveExam = () => {
+  return createApi.get("/dashboard/Teachers/StudentForExam", {
+    headers: authHeader(),
+  });
+};
+
+const viewStudentDetail = (id) => {
+  return createApi.get(`/dashboard/Teachers/viewStudentDetail?id=${id}`, {
+    headers: authHeader(),
+  });
 };
 
 // **************** STUDENT API **************** //
@@ -29,6 +47,9 @@ const allExamForStudent = () => {
 export {
   forgotPassword,
   confirmPassword,
+  userResetPassword,
   showAllStudentData,
   allExamForStudent,
+  verifiedStudentDataForGiveExam,
+  viewStudentDetail,
 };

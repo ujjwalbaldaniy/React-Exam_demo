@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import Form from "../Components/Form";
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import { postSigninData } from "../auth/authService";
+import { toast } from "react-toastify";
 
 const inputs = [
     {
@@ -42,8 +43,10 @@ const SignIn = () => {
                     .then(() => {
                         const localStorageData = JSON.parse(localStorage.getItem("user"));
                         if (localStorageData.role === "teacher") {
-                            navigate('/teacherPage')
+                            toast.success("Login Successful")
+                            navigate('/teacherDeshboard')
                         } else if (localStorageData.role === "student") {
+                            toast.success("Login Successful")
                             navigate('/studentPage')
                         }
                     }).catch((error) => {

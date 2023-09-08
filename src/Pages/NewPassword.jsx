@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useLocation } from "react-router-dom";
 import Form from "../Components/Form";
 import { confirmPassword } from "../Services/allApi";
+import { toast } from "react-toastify";
 
 const confirmPasswordList = [
     {
@@ -45,8 +46,14 @@ const NewPassword = () => {
             })
 
             confirmPassword(location.search, confirmPasswordField)
-                .then((res) => console.log(res))
-                .catch((error) => console.log(error))
+            .then((res) => {
+                console.log(res)
+                toast.success(res.data.message)
+            })
+            .catch((error) => {
+                console.log(error)
+                toast.error(error.response.data.message)
+            })
         }
     }
 
