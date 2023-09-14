@@ -58,6 +58,9 @@ const createExamInputList = [
     },
 ]
 
+const mainObj = {
+    questions: ""
+}
 
 const CreateExam = () => {
 
