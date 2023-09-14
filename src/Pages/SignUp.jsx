@@ -76,12 +76,11 @@ const SignUp = () => {
                         if (res.data.data.token) {
                             localStorage.setItem("user", JSON.stringify(res.data.data));
                             if (res.data.data.role === "teacher") {
-                                toast.success(res.data.message)
                                 navigate('/teacherDeshboard')
                             } else if (res.data.data.role === "student") {
-                                toast.success(res.data.message)
                                 navigate('/studentPage')
                             }
+                            toast.success(res.data.message)
                         } else {
                             return res.data.data;
                         }
