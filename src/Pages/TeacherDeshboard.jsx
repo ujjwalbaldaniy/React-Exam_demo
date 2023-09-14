@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import '../Styles/teacherDeshboard.css'
 import TeacherSideBar from "../Components/TeacherSideBar";
 

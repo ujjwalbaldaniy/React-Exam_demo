@@ -2,85 +2,20 @@ import React, { useState } from "react";
 import TeacherSideBar from "../Components/TeacherSideBar";
 import '../Styles/createExam.css'
 
-const createExamInputList = [
-    {
-        lable: "Subject Name :- ",
-        type: "text",
-        placeholder: "subjectName",
-        name: "subjectName",
-    },
-    {
-        lable: "Question :- ",
-        type: "text",
-        placeholder: "Question",
-        name: "question",
-    },
-    {
-        type: "text",
-        placeholder: "answer1",
-        name: "answer1",
-    },
-    {
-        type: "text",
-        placeholder: "answer2",
-        name: "answer2",
-    },
-    {
-        type: "text",
-        placeholder: "answer3",
-        name: "answer3",
-    },
-    {
-        type: "text",
-        placeholder: "answer4",
-        name: "answer4",
-    },
-    {
-        type: "radio",
-        name: "answer",
-    },
-    {
-        type: "radio",
-        name: "answer",
-    },
-    {
-        type: "radio",
-        name: "answer",
-    },
-    {
-        type: "radio",
-        name: "answer",
-    },
-    {
-        type: "text",
-        placeholder: "Notes",
-        name: "notes",
-    },
-]
-
-
 const CreateExam = () => {
-
+    const [activeQuestion, setActiveQuestion] = useState(0)
     const [examState, setExamState] = useState({
         subjectName: "",
-        questions: [],
         notes: "",
     })
-
-    const [ques, setQues] = useState({
+    const [questions, setQuestions] = useState(Array.from({ length: 15 }, () => ({
         question: "",
         answer: "",
-        options: []
-    });
+        options: ["", "", "", ""],
+    })));
+    const [selectRadioBtnAnswer, setSelectRadioBtnAnswer] = useState(Array(15).fill(""));
 
-    const [answers, setAnswers] = useState({
-        ans1: "",
-        ans2: "",
-        ans3: "",
-        ans4: "",
-    });
-
-    const createExamChange = (e) => {
+    const handleExamStateChange = (e) => {
         const { name, value } = e.target
         setExamState({
             ...examState,
@@ -88,32 +23,82 @@ const CreateExam = () => {
         })
     }
 
-    const quesChange = (e) => {
-        const { name, value } = e.target
-        setQues({
-            ...ques,
-            [name]: value
-        })
+    const handleActiveQuestionChange = (e) => {
+        const allQuestions = [...questions];
+        allQuestions[activeQuestion].question = e.target.value;
+        setQuestions(allQuestions);
+    };
+
+    const handleRadioBtnChange = (e) => {
+        const updatedRadioBtnQuestions = [...questions];
+        updatedRadioBtnQuestions[activeQuestion].answer = e.target.value;
+        setQuestions(updatedRadioBtnQuestions);
+
+        const selectedAnswersField = [...selectRadioBtnAnswer];
+        selectedAnswersField[activeQuestion] = e.target.value;
+        setSelectRadioBtnAnswer(selectedAnswersField);
+    };
+
+    const handlePrevious = () => {
+        if (activeQuestion > 0) {
+            setActiveQuestion(activeQuestion - 1)
+        }
     }
 
-    const answersChange = (e) => {
-        const { name, value } = e.target
-        setAnswers({
-            ...answers,
-            [name]: value
-        })
+    const handleNext = () => {
+        if (activeQuestion < 14) {
+            setActiveQuestion(activeQuestion + 1)
+        }
     }
 
-    const createExamSubmit = (e) => {
+    const handleSubmit = (e) => {
+        console.log("submit");
         e.preventDefault()
-
-        console.log(examState);
-        console.log(ques);
-        console.log(answers);
-
-        ques.options.push(answers)
-        examState.questions.push(ques)
+        console.log(examState, questions);
     }
+
+    const examInputList = [
+        {
+            label: "Subject Name :- ",
+            type: "text",
+            name: "subjectName",
+            placeholder: "enter subject name",
+            value: examState.subjectName,
+            onChange: handleExamStateChange,
+            disabled: activeQuestion !== 0,
+        },
+        {
+            label: "Question :- ",
+            type: "text",
+            placeholder: "enter your question",
+            value: questions[activeQuestion]?.question,
+            onChange: handleActiveQuestionChange,
+        },
+        {
+            label: "Answers :- ",
+            type: "radio",
+            options: questions[activeQuestion]?.options,
+            onChange: handleRadioBtnChange,
+            answer: questions[activeQuestion]?.answer,
+        },
+        {
+            label: "Answer :- ",
+            type: "text",
+            placeholder: "answer",
+            value: selectRadioBtnAnswer[activeQuestion],
+            readOnly: true,
+        },
+        {
+            label: "Notes :- ",
+            type: "text",
+            name: "notes",
+            placeholder: "notes",
+            onChange: handleExamStateChange,
+            value: examState.notes,
+            disabled: activeQuestion !== 0,
+            // readOnly: true,
+        },
+    ];
 
     return (
         <>
@@ -124,36 +109,55 @@ const CreateExam = () => {
                 <div className="teacher_mainbar">
                     <h1>Create Exam</h1>
                     <div className="exam_container">
-                        <form onSubmit={createExamSubmit}>
-                            <label>Subject Name :- </label>
-                            <input type="text" placeholder="subjectName" name="subjectName" value={examState.subjectName} onChange={createExamChange} />
-                            <label>Question :- </label>
-                            <input type="text" placeholder="Question" name="question" value={ques.question} onChange={quesChange} />
+                        <h3>Question {activeQuestion + 1}</h3>
+                        <div>
+                            <form>
+                                {examInputList.map((input, index) => (
+                                    <div key={index}>
+                                        <label>{input.label}</label>
+                                        {input.type === "radio" ? (
+                                            <div>
+                                                {input.options.map((option, optionIndex) => {
+                                                    console.log(option, optionIndex);
 
-                            <div className="mcqs_value">
-                                <div>
-                                    <input type="radio" name="answer" value={answers.answer1} onChange={quesChange} />
-                                    <input type="text" placeholder="answer1" name="ans1" value={answers.answer1} onChange={answersChange} />
-                                </div>
-                                <div>
-                                    <input type="radio" name="answer" value={answers.answer2} onChange={quesChange} />
-                                    <input type="text" placeholder="answer2" name="ans2" value={answers.answer2} onChange={answersChange} />
-                                </div>
-                                <div>
-                                    <input type="radio" name="answer" value={answers.answer3} onChange={quesChange} />
-                                    <input type="text" placeholder="answer3" name="ans3" value={answers.answer3} onChange={answersChange} />
-                                </div>
-                                <div>
-                                    <input type="radio" name="answer" value={answers.answer4} onChange={quesChange} />
-                                    <input type="text" placeholder="answer4" name="ans4" value={answers.answer4} onChange={answersChange} />
-                                </div>
-                            </div>
+                                                    return (
+                                                        <div key={optionIndex}>
+                                                            <input
+                                                                type={input.type}
+                                                                name={`question${activeQuestion}`}
+                                                                value={option}
+                                                                checked={input.answer === option}
+                                                                onChange={input.onChange}
+                                                            />
+                                                            <input
+                                                                type="text"
+                                                                placeholder={`Option ${optionIndex + 1}`}
+                                                                value={option}
+                                                                onChange={(e) => {
+                                                                    const updatedQuestions = [...questions];
+                                                                    updatedQuestions[activeQuestion].options[optionIndex] = e.target.value;
+                                                                    setQuestions(updatedQuestions);
+                                                                }}
+                                                            />
+                                                        </div>
+                                                    )
+                                                })}
+                                            </div>
+                                        ) : (
+                                            <div >
+                                                <input {...input} />
+                                            </div>
+                                        )}
+                                    </div>
+                                ))}
+                            </form>
+                        </div>
 
-                            <label>Notes :- </label>
-                            <input type="text" placeholder="Notes" name="notes" value={examState.notes} onChange={createExamChange} />
-
-                            <button type="submit">Submit</button>
-                        </form>
+                        <div>
+                            <button disabled={activeQuestion === 0} onClick={handlePrevious}>Previous</button>
+                            <button disabled={activeQuestion !== 14} onClick={handleSubmit}>Submit</button>
+                            <button disabled={activeQuestion === 14} onClick={handleNext}>Next</button>
+                        </div>
                     </div>
                 </div>
             </div>

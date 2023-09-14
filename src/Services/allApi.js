@@ -46,6 +46,12 @@ const viewStudentDetail = (id) => {
   });
 };
 
+const createExamPost = (value) => {
+  return createApi.post("/dashboard/Teachers/Exam", JSON.stringify(value), {
+    headers: authHeader(),
+  });
+}
+
 // **************** STUDENT API **************** //
 
 const allExamForStudent = () => {
@@ -62,4 +68,5 @@ export {
   allExamForStudent,
   verifiedStudentDataForGiveExam,
   viewStudentDetail,
+  createExamPost
 };
