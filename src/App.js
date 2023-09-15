@@ -15,6 +15,7 @@ import TeacherDeshboard from "./Pages/TeacherDeshboard";
 import TeacherProfile from "./Pages/TeacherProfile";
 import ViewStudentDeatils from "./Pages/ViewStudentDetails";
 import ResetPassword from "./Pages/ResetPassword";
+import EditExam from "./Pages/EditExam";
 
 function App() {
   return (
@@ -42,6 +43,8 @@ function App() {
               path="/verifiedStudent/:id"
               element={<ViewStudentDeatils />}
             />
+            <Route path="/editExam/:editExamId" element={<EditExam />} />
+            
             <Route path="/teacherProfile" element={<TeacherProfile />} />
             <Route path="/resetPassword" element={<ResetPassword />} />
           </Route>

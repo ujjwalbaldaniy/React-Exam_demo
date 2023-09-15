@@ -1,8 +1,13 @@
 import React, { useState } from "react";
 import TeacherSideBar from "../Components/TeacherSideBar";
 import '../Styles/createExam.css'
+import { createExamPost } from "../Services/allApi";
+import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
+import CreateExamForm from "../Components/CreateExamForm";
 
 const CreateExam = () => {
+    const navigate = useNavigate()
     const [activeQuestion, setActiveQuestion] = useState(0)
     const [examState, setExamState] = useState({
         subjectName: "",
@@ -13,6 +18,7 @@ const CreateExam = () => {
         answer: "",
         options: ["", "", "", ""],
     })));
+
     const [selectRadioBtnAnswer, setSelectRadioBtnAnswer] = useState(Array(15).fill(""));
 
     const handleExamStateChange = (e) => {
@@ -34,6 +40,7 @@ const CreateExam = () => {
         updatedRadioBtnQuestions[activeQuestion].answer = e.target.value;
         setQuestions(updatedRadioBtnQuestions);
 
+        //for answer update
         const selectedAnswersField = [...selectRadioBtnAnswer];
         selectedAnswersField[activeQuestion] = e.target.value;
         setSelectRadioBtnAnswer(selectedAnswersField);
@@ -51,10 +58,28 @@ const CreateExam = () => {
         }
     }
 
+    const examFormData = {
+        subjectName: examState.subjectName,
+        questions: questions,
+        notes: [examState.notes]
+    }
+
     const handleSubmit = (e) => {
-        console.log("submit");
         e.preventDefault()
-        console.log(examState, questions);
+
+        createExamPost(examFormData)
+            .then((res) => {
+                console.log(res);
+                if (res.data.statusCode === 500) {
+                    toast.error(res.data.message)
+                } else {
+                    toast.success(res.data.message)
+                    navigate('/teacherDeshboard')
+                }
+            }).catch((error) => {
+                console.log(error);
+                toast.error(error.response.data.details.body[0]?.message)
+            })
     }
 
     const examInputList = [
@@ -96,9 +121,26 @@ const CreateExam = () => {
             onChange: handleExamStateChange,
             value: examState.notes,
             disabled: activeQuestion !== 0,
-            // readOnly: true,
         },
     ];
+
+    const buttonList = [
+        {
+            name: "Previous",
+            disabled: activeQuestion === 0,
+            onClick: handlePrevious,
+        },
+        {
+            name: "Submit",
+            disabled: activeQuestion !== 14,
+            onClick: handleSubmit,
+        },
+        {
+            name: "Next",
+            disabled: activeQuestion === 14,
+            onClick: handleNext,
+        },
+    ]
 
     return (
         <>
@@ -112,51 +154,13 @@ const CreateExam = () => {
                         <h3>Question {activeQuestion + 1}</h3>
                         <div>
                             <form>
-                                {examInputList.map((input, index) => (
-                                    <div key={index}>
-                                        <label>{input.label}</label>
-                                        {input.type === "radio" ? (
-                                            <div>
-                                                {input.options.map((option, optionIndex) => {
-                                                    console.log(option, optionIndex);
-
-                                                    return (
-                                                        <div key={optionIndex}>
-                                                            <input
-                                                                type={input.type}
-                                                                name={`question${activeQuestion}`}
-                                                                value={option}
-                                                                checked={input.answer === option}
-                                                                onChange={input.onChange}
-                                                            />
-                                                            <input
-                                                                type="text"
-                                                                placeholder={`Option ${optionIndex + 1}`}
-                                                                value={option}
-                                                                onChange={(e) => {
-                                                                    const updatedQuestions = [...questions];
-                                                                    updatedQuestions[activeQuestion].options[optionIndex] = e.target.value;
-                                                                    setQuestions(updatedQuestions);
-                                                                }}
-                                                            />
-                                                        </div>
-                                                    )
-                                                })}
-                                            </div>
-                                        ) : (
-                                            <div >
-                                                <input {...input} />
-                                            </div>
-                                        )}
-                                    </div>
-                                ))}
+                                <CreateExamForm examInputList={examInputList} activeQuestion={activeQuestion} questions={questions} setQuestions={setQuestions} />
                             </form>
                         </div>
-
                         <div>
-                            <button disabled={activeQuestion === 0} onClick={handlePrevious}>Previous</button>
-                            <button disabled={activeQuestion !== 14} onClick={handleSubmit}>Submit</button>
-                            <button disabled={activeQuestion === 14} onClick={handleNext}>Next</button>
+                            {buttonList.map((element, index) => (
+                                <button key={index} {...element}>{element.name}</button>
+                            ))}
                         </div>
                     </div>
                 </div>

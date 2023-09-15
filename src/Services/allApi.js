@@ -50,7 +50,35 @@ const createExamPost = (value) => {
   return createApi.post("/dashboard/Teachers/Exam", JSON.stringify(value), {
     headers: authHeader(),
   });
-}
+};
+
+const viewExam = () => {
+  return createApi.get("/dashboard/Teachers/viewExam", {
+    headers: authHeader(),
+  });
+};
+
+const deleteExamApi = (id) => {
+  return createApi.delete(`/dashboard/Teachers/deleteExam?id=${id}`, {
+    headers: authHeader(),
+  });
+};
+
+const editExamApi = (id) => {
+  return createApi.get(`/dashboard/Teachers/examDetail?id=${id}`, {
+    headers: authHeader(),
+  });
+};
+
+const putExamDataApi = (id) => {
+  return createApi.put(
+    `dashboard/Teachers/editExam?id=${id}`,
+    JSON.stringify(id),
+    {
+      headers: authHeader(),
+    }
+  );
+};
 
 // **************** STUDENT API **************** //
 
@@ -68,5 +96,9 @@ export {
   allExamForStudent,
   verifiedStudentDataForGiveExam,
   viewStudentDetail,
-  createExamPost
+  createExamPost,
+  viewExam,
+  deleteExamApi,
+  editExamApi,
+  putExamDataApi,
 };
