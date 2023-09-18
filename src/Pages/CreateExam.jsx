@@ -20,6 +20,7 @@ const CreateExam = () => {
     })));
 
     const [selectRadioBtnAnswer, setSelectRadioBtnAnswer] = useState(Array(15).fill(""));
+    const { subjectName, notes } = examState
 
     const handleExamStateChange = (e) => {
         const { name, value } = e.target
@@ -59,9 +60,9 @@ const CreateExam = () => {
     }
 
     const examFormData = {
-        subjectName: examState.subjectName,
+        subjectName: subjectName,
         questions: questions,
-        notes: [examState.notes]
+        notes: [notes]
     }
 
     const handleSubmit = (e) => {
@@ -88,7 +89,7 @@ const CreateExam = () => {
             type: "text",
             name: "subjectName",
             placeholder: "enter subject name",
-            value: examState.subjectName,
+            value: subjectName,
             onChange: handleExamStateChange,
             disabled: activeQuestion !== 0,
         },
@@ -119,7 +120,7 @@ const CreateExam = () => {
             name: "notes",
             placeholder: "notes",
             onChange: handleExamStateChange,
-            value: examState.notes,
+            value: notes,
             disabled: activeQuestion !== 0,
         },
     ];

@@ -4,6 +4,8 @@ import TeacherSideBar from "../Components/TeacherSideBar";
 import { deleteExamApi, viewExam } from "../Services/allApi";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
+import { confirmAlert } from "react-confirm-alert";
+import 'react-confirm-alert/src/react-confirm-alert.css';
 
 const viewExmaTableList = [
     {
@@ -49,9 +51,26 @@ const TeacherDeshboard = () => {
             })
     }
 
-    const editExam = (id) => {
-        console.log(id);
-        navigate(`/editExam/${id}`)
+    const confirmDelete = (id) => {
+        confirmAlert({
+            title: 'Confirm to submit',
+            message: 'Are you sure to do this.',
+            buttons: [
+                {
+                    label: 'Yes',
+                    onClick: () => deleteExam(id)
+                },
+                {
+                    label: 'No',
+                }
+            ]
+        });
+    }
+
+    const editExam = (id, subjectName, notes) => {
+        console.log(id, subjectName, notes);
+        navigate(`/editExam/${id}`, { state: { subjectName: subjectName, notes: notes } })
+
     }
 
     return (
@@ -77,7 +96,7 @@ const TeacherDeshboard = () => {
                                     <td>{element.subjectName}</td>
                                     <td>{element.notes}</td>
                                     <td>{element.email}</td>
-                                    <td><button onClick={() => editExam(element._id)}>Edit Exam</button> <button onClick={() => deleteExam(element._id)}>Delete Exam</button></td>
+                                    <td><button onClick={() => editExam(element._id, element.subjectName, element.notes)}>Edit Exam</button> <button onClick={() => confirmDelete(element._id)}>Delete Exam</button></td>
                                 </tr>
                             ))}
                         </tbody>

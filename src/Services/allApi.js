@@ -70,10 +70,10 @@ const editExamApi = (id) => {
   });
 };
 
-const putExamDataApi = (id) => {
+const putExamDataApi = (value, id) => {
   return createApi.put(
     `dashboard/Teachers/editExam?id=${id}`,
-    JSON.stringify(id),
+    JSON.stringify(value),
     {
       headers: authHeader(),
     }
