@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import Form from "../Components/Form";
 import { userResetPassword } from "../Services/allApi";
 import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 
 const inputs = [
     {
@@ -25,7 +26,10 @@ const inputs = [
 ]
 
 const ResetPassword = () => {
-    // const navigate = useNavigate()
+    const navigate = useNavigate()
+    const localStorageData = JSON.parse(localStorage.getItem("user"));
+    console.log(localStorageData.role);
+
     const [resetPasswordField, setResetPasswordField] = useState({
         oldPassword: "",
         Password: "",
@@ -49,6 +53,11 @@ const ResetPassword = () => {
                 .then((res) => {
                     console.log(res)
                     toast.success(res.data.message)
+                    if (localStorageData.role === "teacher") {
+                        navigate('/teacherDeshboard')
+                    } else if (localStorageData.role === "student") {
+                        navigate('/studentDeshboard')
+                    }
                 })
                 .catch((error) => {
                     console.log(error)

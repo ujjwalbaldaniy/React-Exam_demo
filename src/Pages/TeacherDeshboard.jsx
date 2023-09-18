@@ -69,8 +69,7 @@ const TeacherDeshboard = () => {
 
     const editExam = (id, subjectName, notes) => {
         console.log(id, subjectName, notes);
-        navigate(`/editExam/${id}`, { state: { subjectName: subjectName, notes: notes } })
-
+        navigate(`/createExam`, { state: { subjectName: subjectName, notes: notes, id: id, toggle: false } })
     }
 
     return (

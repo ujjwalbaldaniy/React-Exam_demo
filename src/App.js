@@ -5,7 +5,6 @@ import SignUp from "./Pages/SignUp";
 import SignIn from "./Pages/SignIn";
 import ForgotPassword from "./Pages/ForgotPassword";
 import NewPassword from "./Pages/NewPassword";
-import StudentPage from "./Pages/StudentPage";
 import { StudentPrivate, TeacherPrivate } from "./auth/PrivateRouting";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -16,6 +15,10 @@ import TeacherProfile from "./Pages/TeacherProfile";
 import ViewStudentDeatils from "./Pages/ViewStudentDetails";
 import ResetPassword from "./Pages/ResetPassword";
 import EditExam from "./Pages/EditExam";
+import StudentDeshboard from "./Pages/StudentDeshboard";
+import StudentGiveExam from "./Pages/StudentGiveExam";
+import StudentProfile from "./Pages/StudentProfile";
+import StudentNameChange from "./Pages/StudentNameChange";
 
 function App() {
   return (
@@ -46,17 +49,21 @@ function App() {
             <Route path="/editExam/:editExamId" element={<EditExam />} />
             
             <Route path="/teacherProfile" element={<TeacherProfile />} />
-            <Route path="/resetPassword" element={<ResetPassword />} />
+            
           </Route>
 
           <Route path="/" element={<StudentPrivate />}>
-            <Route path="/studentPage" element={<StudentPage />} />
+            <Route path="/studentDeshboard" element={<StudentDeshboard />} />
+            <Route path="/studentDeshboard/:id" element={<StudentGiveExam />} />
+            <Route path="/studentProfile" element={<StudentProfile />} />
+            <Route path="/studentNameChange" element={<StudentNameChange />} />
           </Route>
 
           <Route path="/signup" element={<SignUp />} />
           <Route path="/signin" element={<SignIn />} />
           <Route path="/forgotPassword" element={<ForgotPassword />} />
           <Route path="/newPassword" element={<NewPassword />} />
+          <Route path="/resetPassword" element={<ResetPassword />} />
         </Routes>
       </BrowserRouter>
     </>

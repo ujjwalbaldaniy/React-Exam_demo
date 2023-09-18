@@ -85,6 +85,20 @@ const putExamDataApi = (value, id) => {
 const allExamForStudent = () => {
   return createApi.get("/student/studentExam", { headers: authHeader() });
 };
+const studentExamPaper = (id) => {
+  return createApi.get(`/student/examPaper?id=${id}`, {
+    headers: authHeader(),
+  });
+};
+
+const getStudentProfile = () => {
+  return createApi.get("/student/getStudentDetail", { headers: authHeader() });
+};
+const putStudentProfile = (value) => {
+  return createApi.put("/student/studentProfile", JSON.stringify(value), {
+    headers: authHeader(),
+  });
+};
 
 export {
   postSigninData,
@@ -101,4 +115,7 @@ export {
   deleteExamApi,
   editExamApi,
   putExamDataApi,
+  studentExamPaper,
+  getStudentProfile,
+  putStudentProfile,
 };

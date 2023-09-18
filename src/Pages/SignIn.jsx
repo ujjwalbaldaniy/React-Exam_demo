@@ -50,7 +50,7 @@ const SignIn = () => {
                             if (res.data.data.role === "teacher") {
                                 navigate('/teacherDeshboard')
                             } else if (res.data.data.role === "student") {
-                                navigate('/studentPage')
+                                navigate('/studentDeshboard')
                             }
                             toast.success(res.data.message)
                         } else {

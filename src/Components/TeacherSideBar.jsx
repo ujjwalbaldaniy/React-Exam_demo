@@ -11,7 +11,7 @@ const TeacherSideBar = () => {
                         <NavLink to='/teacherDeshboard'>DeshBoard</NavLink>
                     </li>
                     <li>
-                        <NavLink to='/createExam'>Create Exam</NavLink>
+                        <NavLink to='/createExam' state={{ toggle: true }} >Create Exam</NavLink>
                     </li>
                     <li>
                         <NavLink to='/verifiedStudent'>Verified Student</NavLink>

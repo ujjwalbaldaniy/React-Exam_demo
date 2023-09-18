@@ -1,13 +1,15 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import TeacherSideBar from "../Components/TeacherSideBar";
 import '../Styles/createExam.css'
-import { createExamPost } from "../Services/allApi";
+import { createExamPost, editExamApi, putExamDataApi } from "../Services/allApi";
 import { toast } from "react-toastify";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import CreateExamForm from "../Components/CreateExamForm";
 
 const CreateExam = () => {
     const navigate = useNavigate()
+    // const params = useParams()
+    const location = useLocation()
     const [activeQuestion, setActiveQuestion] = useState(0)
     const [examState, setExamState] = useState({
         subjectName: "",
@@ -65,22 +67,56 @@ const CreateExam = () => {
         notes: [notes]
     }
 
+    useEffect(() => {
+        editExamApi(location.state.id)
+            .then((res) => {
+                console.log(res);
+                if (!location.state.toggle) {
+                    setQuestions(res.data.data.questions)
+                    // console.log(res.data.data.questions.map((item) => item.answer))
+                    setSelectRadioBtnAnswer(res.data.data.questions.map((item) => item.answer))
+                    setExamState(location.state)
+                }
+            })
+            .catch((error) => {
+                console.log(error);
+            })
+    }, [location.state.id, location.state, location.state.toggle])
+
     const handleSubmit = (e) => {
         e.preventDefault()
 
-        createExamPost(examFormData)
-            .then((res) => {
-                console.log(res);
-                if (res.data.statusCode === 500) {
-                    toast.error(res.data.message)
-                } else {
-                    toast.success(res.data.message)
-                    navigate('/teacherDeshboard')
-                }
-            }).catch((error) => {
-                console.log(error);
-                toast.error(error.response.data.details.body[0]?.message)
-            })
+        if (location.state.toggle) {
+
+            createExamPost(examFormData)
+                .then((res) => {
+                    console.log(res);
+                    if (res.data.statusCode === 500) {
+                        toast.error(res.data.message)
+                    } else {
+                        toast.success(res.data.message)
+                        navigate('/teacherDeshboard')
+                    }
+                }).catch((error) => {
+                    console.log(error);
+                    toast.error(error.response.data.details.body[0]?.message)
+                })
+        }
+        else {
+            putExamDataApi(examFormData, location.state.id)
+                .then((res) => {
+                    console.log(res);
+                    if (res.data.statusCode === 500) {
+                        toast.error(res.data.message)
+                    } else {
+                        toast.success(res.data.message)
+                        navigate('/teacherDeshboard')
+                    }
+                }).catch((error) => {
+                    console.log(error);
+                    toast.error(error.response.data.details.body[0]?.message)
+                })
+        }
     }
 
     const examInputList = [
@@ -150,7 +186,7 @@ const CreateExam = () => {
                     <TeacherSideBar />
                 </div>
                 <div className="teacher_mainbar">
-                    <h1>Create Exam</h1>
+                    <h1>{location.state.toggle ? "Create" : "Edit"} Exam</h1>
                     <div className="exam_container">
                         <h3>Question {activeQuestion + 1}</h3>
                         <div>
