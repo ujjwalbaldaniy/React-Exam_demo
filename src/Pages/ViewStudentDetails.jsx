@@ -38,7 +38,7 @@ const ViewStudentDeatils = () => {
             })
     }, [params.id])
 
-    console.log(studentSingleInfo);
+    console.log(studentSingleInfo, studentSingleDetail);
 
     return (
         <>
@@ -59,26 +59,26 @@ const ViewStudentDeatils = () => {
                         </div>
                         <div className="singleData_exam">
                             <h1>List of Given Exam</h1>
-                                <table>
-                                    <thead>
-                                        <tr >
-                                            {studentSingleDetailList.map((element, index) => (
-                                                <th key={index}>{element.name}</th>
-                                            ))}
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        {studentSingleDetail.map((element, index) => (
-                                            <tr key={index}>
-                                                <td>{index + 1}</td>
-                                                <td>{element.subjectName}</td>
-                                                <td>{element.rank}</td>
-                                                <td>{element.resultStatus}</td>
-                                                <td>{element.score}</td>
-                                            </tr>
+                            <table>
+                                <thead>
+                                    <tr >
+                                        {studentSingleDetailList.map((element, index) => (
+                                            <th key={index}>{element.name}</th>
                                         ))}
-                                    </tbody>
-                                </table>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {studentSingleDetail.map((element, index) => (
+                                        <tr key={index}>
+                                            <td>{index + 1}</td>
+                                            <td>{element.subjectName}</td>
+                                            <td>{element.rank}</td>
+                                            <td>{element.resultStatus}</td>
+                                            <td>{element.score}</td>
+                                        </tr>
+                                    ))}
+                                </tbody>
+                            </table>
                         </div>
                     </div>
                 </div>

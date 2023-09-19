@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import StudentSideBar from "./StudentSideBar";
 import Form from "../Components/Form";
 import { putStudentProfile } from "../Services/allApi";
+import { toast } from "react-toastify";
 
 const studentNameChangeList = [
     {
@@ -30,9 +31,15 @@ const StudentNameChange = () => {
         putStudentProfile(studentName)
             .then((res) => {
                 console.log(res);
+                toast.success(res.data.message)
+
             }).catch((error) => {
                 console.log(error);
+                toast.error(error.response.data.message)
             })
+        setStudentName({
+            name: ""
+        })
     }
 
     return (

@@ -99,6 +99,11 @@ const putStudentProfile = (value) => {
     headers: authHeader(),
   });
 };
+const postGiveExam = (id, value) => {
+  return createApi.post(`/student/giveExam?id=${id}`, JSON.stringify(value), {
+    headers: authHeader(),
+  });
+};
 
 export {
   postSigninData,
@@ -118,4 +123,5 @@ export {
   studentExamPaper,
   getStudentProfile,
   putStudentProfile,
+  postGiveExam,
 };

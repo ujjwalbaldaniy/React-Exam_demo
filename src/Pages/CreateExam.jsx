@@ -68,19 +68,19 @@ const CreateExam = () => {
     }
 
     useEffect(() => {
-        editExamApi(location.state.id)
-            .then((res) => {
-                console.log(res);
-                if (!location.state.toggle) {
+        if (!location.state.toggle) {
+            editExamApi(location.state.id)
+                .then((res) => {
+                    console.log(res.data.data.questions);
                     setQuestions(res.data.data.questions)
                     // console.log(res.data.data.questions.map((item) => item.answer))
                     setSelectRadioBtnAnswer(res.data.data.questions.map((item) => item.answer))
                     setExamState(location.state)
-                }
-            })
-            .catch((error) => {
-                console.log(error);
-            })
+                })
+                .catch((error) => {
+                    console.log(error);
+                })
+        }
     }, [location.state.id, location.state, location.state.toggle])
 
     const handleSubmit = (e) => {

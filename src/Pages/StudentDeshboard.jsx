@@ -27,16 +27,19 @@ const studnetTableList = [
 const StudentDeshboard = () => {
     const navigate = useNavigate()
     const [examforStudent, setExamforStudent] = useState([]);
+    const [studentSingleDetail, setStudentSingleDetail] = useState([]);
 
     useEffect(() => {
         allExamForStudent()
             .then((res) => {
-                // console.log(res.data.data);
+                console.log(res.data.data);
                 setExamforStudent(res.data.data)
+                setStudentSingleDetail(res.data.data[0]?.Result)
             }).catch((error) => {
-                // console.log(error);
+                console.log(error);
             })
     }, [])
+    console.log(studentSingleDetail);
 
     const givenExam = (id) => {
         navigate(`/studentDeshboard/${id}`)
@@ -67,7 +70,7 @@ const StudentDeshboard = () => {
                                         <td>{element.subjectName}</td>
                                         <td>{element.email}</td>
                                         <td>{element._id}</td>
-                                        <td></td>
+                                        <td><button>Details</button></td>
                                         <td><button onClick={() => givenExam(element._id)}>Give Exam</button></td>
                                     </tr>
                                 ))}
