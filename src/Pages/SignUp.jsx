@@ -76,9 +76,9 @@ const SignUp = () => {
                         if (res.data.data.token) {
                             localStorage.setItem("user", JSON.stringify(res.data.data));
                             if (res.data.data.role === "teacher") {
-                                navigate('/teacherDeshboard')
+                                navigate('/teacherDashboard')
                             } else if (res.data.data.role === "student") {
-                                navigate('/studentDeshboard')
+                                navigate('/studentDashboard')
                             }
                             toast.success(res.data.message)
                         } else {

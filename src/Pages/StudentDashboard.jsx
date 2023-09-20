@@ -24,7 +24,7 @@ const studnetTableList = [
     },
 ]
 
-const StudentDeshboard = () => {
+const StudentDashboard = () => {
     const navigate = useNavigate()
     const [examforStudent, setExamforStudent] = useState([]);
     const [studentSingleDetail, setStudentSingleDetail] = useState([]);
@@ -42,7 +42,7 @@ const StudentDeshboard = () => {
     console.log(studentSingleDetail);
 
     const givenExam = (id) => {
-        navigate(`/studentDeshboard/${id}`)
+        navigate(`/studentDashboard/${id}`)
     }
 
     return (
@@ -52,7 +52,7 @@ const StudentDeshboard = () => {
                     <StudentSideBar />
                 </div>
                 <div className="teacher_mainbar">
-                    <h1>Student Deshboard</h1>
+                    <h1>Student Dashboard</h1>
                     <div>
                         <h3>List of Exam</h3>
                         <table>
@@ -83,4 +83,4 @@ const StudentDeshboard = () => {
     )
 };
 
-export default StudentDeshboard;
+export default StudentDashboard;

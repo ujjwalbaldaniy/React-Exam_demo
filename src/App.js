@@ -10,12 +10,12 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import CreateExam from "./Pages/CreateExam";
 import VerifiedStudent from "./Pages/VerifiedStudent";
-import TeacherDeshboard from "./Pages/TeacherDeshboard";
+import TeacherDashboard from "./Pages/TeacherDashboard";
 import TeacherProfile from "./Pages/TeacherProfile";
 import ViewStudentDeatils from "./Pages/ViewStudentDetails";
 import ResetPassword from "./Pages/ResetPassword";
 import EditExam from "./Pages/EditExam";
-import StudentDeshboard from "./Pages/StudentDeshboard";
+import StudentDashboard from "./Pages/StudentDashboard";
 import StudentGiveExam from "./Pages/StudentGiveExam";
 import StudentProfile from "./Pages/StudentProfile";
 import StudentNameChange from "./Pages/StudentNameChange";
@@ -39,7 +39,7 @@ function App() {
         <Navbar />
         <Routes>
           <Route path="/" element={<TeacherPrivate />}>
-            <Route path="/teacherDeshboard" element={<TeacherDeshboard />} />
+            <Route path="/teacherDashboard" element={<TeacherDashboard />} />
             <Route path="/createExam" element={<CreateExam />} />
             <Route path="/verifiedStudent" element={<VerifiedStudent />} />
             <Route
@@ -53,8 +53,8 @@ function App() {
           </Route>
 
           <Route path="/" element={<StudentPrivate />}>
-            <Route path="/studentDeshboard" element={<StudentDeshboard />} />
-            <Route path="/studentDeshboard/:id" element={<StudentGiveExam />} />
+            <Route path="/studentDashboard" element={<StudentDashboard />} />
+            <Route path="/studentDashboard/:id" element={<StudentGiveExam />} />
             <Route path="/studentProfile" element={<StudentProfile />} />
             <Route path="/studentNameChange" element={<StudentNameChange />} />
           </Route>

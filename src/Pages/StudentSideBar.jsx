@@ -8,7 +8,7 @@ const StudentSideBar = () => {
             <div className="teacher_sidebar_menu">
                 <ul>
                     <li>
-                        <NavLink to='/studentDeshboard'>DeshBoard</NavLink>
+                        <NavLink to='/studentDashboard'>DashBoard</NavLink>
                     </li>
                     <li>
                         <NavLink to='/studentProfile'>Profile</NavLink>

@@ -8,7 +8,7 @@ const TeacherSideBar = () => {
             <div className="teacher_sidebar_menu">
                 <ul>
                     <li>
-                        <NavLink to='/teacherDeshboard'>DeshBoard</NavLink>
+                        <NavLink to='/teacherDashboard'>DashBoard</NavLink>
                     </li>
                     <li>
                         <NavLink to='/createExam' state={{ toggle: true }} >Create Exam</NavLink>

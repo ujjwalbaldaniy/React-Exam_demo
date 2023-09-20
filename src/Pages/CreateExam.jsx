@@ -95,7 +95,7 @@ const CreateExam = () => {
                         toast.error(res.data.message)
                     } else {
                         toast.success(res.data.message)
-                        navigate('/teacherDeshboard')
+                        navigate('/teacherDashboard')
                     }
                 }).catch((error) => {
                     console.log(error);
@@ -110,7 +110,7 @@ const CreateExam = () => {
                         toast.error(res.data.message)
                     } else {
                         toast.success(res.data.message)
-                        navigate('/teacherDeshboard')
+                        navigate('/teacherDashboard')
                     }
                 }).catch((error) => {
                     console.log(error);

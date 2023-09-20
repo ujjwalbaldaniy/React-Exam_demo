@@ -25,7 +25,7 @@ const viewExmaTableList = [
     },
 ]
 
-const TeacherDeshboard = () => {
+const TeacherDashboard = () => {
     const navigate = useNavigate()
     const [viewExamData, setViewExamData] = useState([]);
 
@@ -79,7 +79,7 @@ const TeacherDeshboard = () => {
                     <TeacherSideBar />
                 </div>
                 <div className="teacher_mainbar">
-                    <h1>Teacher Deshboard</h1>
+                    <h1>Teacher Dashboard</h1>
                     <table>
                         <thead>
                             <tr>
@@ -106,4 +106,4 @@ const TeacherDeshboard = () => {
     )
 };
 
-export default TeacherDeshboard;
+export default TeacherDashboard;

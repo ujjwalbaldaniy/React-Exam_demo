@@ -89,7 +89,7 @@ const EditExam = () => {
                     toast.error(res.data.message)
                 } else {
                     toast.success(res.data.message)
-                    navigate('/teacherDeshboard')
+                    navigate('/teacherDashboard')
                 }
             }).catch((error) => {
                 console.log(error);
@@ -164,7 +164,7 @@ const EditExam = () => {
                     <TeacherSideBar />
                 </div>
                 <div className="teacher_mainbar">
-                    <h1>Teacher Deshboard</h1>
+                    <h1>Teacher Dashboard</h1>
                     <p>{params.editExamId}</p>
                     <div className="exam_container">
                         <h3>Question {activeQuestion + 1}</h3>

@@ -54,9 +54,9 @@ const ResetPassword = () => {
                     console.log(res)
                     toast.success(res.data.message)
                     if (localStorageData.role === "teacher") {
-                        navigate('/teacherDeshboard')
+                        navigate('/teacherDashboard')
                     } else if (localStorageData.role === "student") {
-                        navigate('/studentDeshboard')
+                        navigate('/studentDashboard')
                     }
                 })
                 .catch((error) => {
