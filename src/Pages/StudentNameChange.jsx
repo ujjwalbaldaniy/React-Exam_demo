@@ -3,23 +3,24 @@ import StudentSideBar from "./StudentSideBar";
 import Form from "../Components/Form";
 import { putStudentProfile } from "../Services/allApi";
 import { toast } from "react-toastify";
+import formValidation from "../utils/validation";
 
-const studentNameChangeList = [
-    {
-        name: "name",
-        type: "text",
-        placeholder: "name",
-        lable: "Name :- "
-    },
-]
 
 const StudentNameChange = () => {
     const [studentName, setStudentName] = useState({
         name: ""
     });
+    const [formErrors, setFormErrors] = useState({
+        name: ""
+    });
 
     const studentNameChange = (e) => {
         const { name, value } = e.target
+        const error = formValidation(name, value);
+        setFormErrors({
+            ...formErrors,
+            [name]: error,
+        });
         setStudentName({
             ...studentName,
             [name]: value
@@ -28,19 +29,34 @@ const StudentNameChange = () => {
 
     const studentNameSubmit = (e) => {
         e.preventDefault()
-        putStudentProfile(studentName)
-            .then((res) => {
-                console.log(res);
-                toast.success(res.data.message)
-
-            }).catch((error) => {
-                console.log(error);
-                toast.error(error.response.data.message)
-            })
-        setStudentName({
-            name: ""
-        })
+        if (Object.values(studentName).some((value) => value === "")) {
+            toast.error("Please enter all Fields");
+        } else {
+            putStudentProfile(studentName)
+                .then((res) => {
+                    console.log(res);
+                    toast.success(res.data.message)
+                    setStudentName({
+                        name: ""
+                    })
+                }).catch((error) => {
+                    console.log(error);
+                    toast.error(error.response.data.message)
+                })
+        }
     }
+
+    const studentNameChangeList = [
+        {
+            name: "name",
+            type: "text",
+            placeholder: "name",
+            lable: "Name :- ",
+            showerrors: formErrors.name,
+            onChange: studentNameChange,
+            value: studentName.name,
+        },
+    ]
 
     return (
         <>
@@ -54,7 +70,7 @@ const StudentNameChange = () => {
                             <div className="login_container">
                                 <h1 className="login_title">Student Name Change</h1>
                                 <form className="login_form" onSubmit={studentNameSubmit}>
-                                    <Form handleChange={studentNameChange} inputField={studentName} inputs={studentNameChangeList} />
+                                    <Form inputs={studentNameChangeList} />
                                     <button type="submit" className="login_btn">Submit</button>
                                 </form>
                             </div>

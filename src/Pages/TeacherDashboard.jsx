@@ -6,6 +6,7 @@ import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import { confirmAlert } from "react-confirm-alert";
 import 'react-confirm-alert/src/react-confirm-alert.css';
+import Loader from "../Components/Loader";
 
 const viewExmaTableList = [
     {
@@ -28,12 +29,14 @@ const viewExmaTableList = [
 const TeacherDashboard = () => {
     const navigate = useNavigate()
     const [viewExamData, setViewExamData] = useState([]);
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         viewExam()
             .then((res) => {
                 console.log(res.data.data)
                 setViewExamData(res.data.data)
+                setLoading(false)
             }).catch((error) => {
                 console.log(error);
             })
@@ -78,29 +81,31 @@ const TeacherDashboard = () => {
                 <div className="teacher_sidebar">
                     <TeacherSideBar />
                 </div>
-                <div className="teacher_mainbar">
-                    <h1>Teacher Dashboard</h1>
-                    <table>
-                        <thead>
-                            <tr>
-                                {viewExmaTableList.map((element, index) => (
-                                    <th key={index}>{element.name}</th>
-                                ))}
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {viewExamData.map((element, index) => (
-                                <tr key={index}>
-                                    <td>{index + 1}</td>
-                                    <td>{element.subjectName}</td>
-                                    <td>{element.notes}</td>
-                                    <td>{element.email}</td>
-                                    <td><button onClick={() => editExam(element._id, element.subjectName, element.notes)}>Edit Exam</button> <button onClick={() => confirmDelete(element._id)}>Delete Exam</button></td>
+                {loading ? <Loader /> : (
+                    <div className="teacher_mainbar">
+                        <h1>Teacher Dashboard</h1>
+                        <table>
+                            <thead>
+                                <tr>
+                                    {viewExmaTableList.map((element, index) => (
+                                        <th key={index}>{element.name}</th>
+                                    ))}
                                 </tr>
-                            ))}
-                        </tbody>
-                    </table>
-                </div>
+                            </thead>
+                            <tbody>
+                                {viewExamData.map((element, index) => (
+                                    <tr key={index}>
+                                        <td>{index + 1}</td>
+                                        <td>{element.subjectName}</td>
+                                        <td>{element.notes}</td>
+                                        <td>{element.email}</td>
+                                        <td><button onClick={() => editExam(element._id, element.subjectName, element.notes)}>Edit Exam</button> <button onClick={() => confirmDelete(element._id)}>Delete Exam</button></td>
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </table>
+                    </div>
+                )}
             </div>
         </>
     )

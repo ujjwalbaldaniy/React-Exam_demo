@@ -1,14 +1,15 @@
 import React from "react";
 import '../Styles/form.css'
 
-const Form = ({ handleChange, inputField, inputs }) => {
+const Form = ({ inputs }) => {
 
     return (
         <>
             {inputs.map((input, index) => (
                 <div className="input-div" key={index + 1}>
                     <label>{input.lable}</label>
-                    <input onChange={handleChange} {...input} value={inputField[input.name]} />
+                    <input {...input} />
+                    {input.showerrors && (<div key={index} style={{ color: "red" }}>{input.showerrors} </div>)}
                 </div>
             ))}
         </>

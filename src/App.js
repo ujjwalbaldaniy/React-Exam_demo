@@ -49,7 +49,7 @@ function App() {
             <Route path="/editExam/:editExamId" element={<EditExam />} />
             
             <Route path="/teacherProfile" element={<TeacherProfile />} />
-            
+
           </Route>
 
           <Route path="/" element={<StudentPrivate />}>

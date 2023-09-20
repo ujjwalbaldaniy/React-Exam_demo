@@ -3,21 +3,7 @@ import Form from "../Components/Form";
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { postSigninData } from "../Services/allApi";
-
-const inputs = [
-    {
-        name: "email",
-        type: "email",
-        placeholder: "email",
-        lable: "Email Id :- "
-    },
-    {
-        name: "password",
-        type: "password",
-        placeholder: "password",
-        lable: "Password :- "
-    },
-]
+import formValidation from "../utils/validation";
 
 const SignIn = () => {
     const navigate = useNavigate()
@@ -25,9 +11,18 @@ const SignIn = () => {
         email: "",
         password: ""
     });
+    const [formErrors, setFormErrors] = useState({
+        email: "",
+        password: ""
+    });
 
     const handleSigninChange = (e) => {
         const { name, value } = e.target
+        const error = formValidation(name, value);
+        setFormErrors({
+            ...formErrors,
+            [name]: error,
+        });
         setSigninField({
             ...signinField,
             [name]: value
@@ -36,9 +31,9 @@ const SignIn = () => {
 
     const handleSigninSubmit = (e) => {
         e.preventDefault()
-        if (signinField.email && signinField.password) {
-            console.log(signinField);
-
+        if (Object.values(signinField).some((value) => value === "")) {
+            toast.error("Please enter all Fields");
+        } else {
             postSigninData(signinField)
                 .then((res) => {
                     console.log(res);
@@ -53,21 +48,41 @@ const SignIn = () => {
                                 navigate('/studentDashboard')
                             }
                             toast.success(res.data.message)
+                            setSigninField({
+                                email: "",
+                                password: ""
+                            })
                         } else {
                             return res.data.data;
                         }
                     }
                 }).catch((error) => {
                     console.log(error);
-                    toast.error(error.message)
+                    // toast.error(error.message)
                 })
-
-            setSigninField({
-                email: "",
-                password: ""
-            })
         }
     }
+
+    const inputs = [
+        {
+            name: "email",
+            type: "email",
+            placeholder: "email",
+            lable: "Email Id :- ",
+            showerrors: formErrors.email,
+            onChange: handleSigninChange,
+            value: signinField.email,
+        },
+        {
+            name: "password",
+            type: "password",
+            placeholder: "password",
+            lable: "Password :- ",
+            showerrors: formErrors.password,
+            onChange: handleSigninChange,
+            value: signinField.password,
+        },
+    ]
 
     return (
         <>
@@ -75,7 +90,7 @@ const SignIn = () => {
                 <div className="login_container">
                     <h1 className="login_title">Sign In</h1>
                     <form className="login_form" onSubmit={handleSigninSubmit}>
-                        <Form handleChange={handleSigninChange} inputField={signinField} inputs={inputs} />
+                        <Form inputs={inputs} />
                         <Link to='/forgotPassword' style={{ cursor: 'pointer' }}>Forgot your password?</Link>
                         <button type="submit" className="login_btn">Submit</button>
                     </form>
