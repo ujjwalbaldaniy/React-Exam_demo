@@ -18,7 +18,7 @@ const studnetTableList = [
         name: "Id"
     },
     {
-        name: "Result"
+        name: "Action"
     },
     {
         name: "Action"
@@ -28,7 +28,6 @@ const studnetTableList = [
 const StudentDashboard = () => {
     const navigate = useNavigate()
     const [examforStudent, setExamforStudent] = useState([]);
-    // const [studentSingleDetail, setStudentSingleDetail] = useState([]);
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
@@ -36,16 +35,18 @@ const StudentDashboard = () => {
             .then((res) => {
                 console.log(res.data.data);
                 setExamforStudent(res.data.data)
-                // setStudentSingleDetail(res.data.data[0]?.Result)
                 setLoading(false)
             }).catch((error) => {
                 console.log(error);
             })
     }, [])
-    // console.log(studentSingleDetail);
 
     const givenExam = (id) => {
         navigate(`/studentDashboard/${id}`)
+    }
+
+    const viewExamResult = (data) => {
+        navigate('/studentResult', { state: data })
     }
 
     return (
@@ -56,9 +57,8 @@ const StudentDashboard = () => {
                 </div>
                 {loading ? <Loader /> : (
                     <div className="teacher_mainbar">
-                        <h1>Student Dshboard</h1>
+                        <h1 className="title-heading">Student Dashboard</h1>
                         <div>
-                            <h3>List of Exam</h3>
                             <table>
                                 <thead>
                                     <tr>
@@ -74,8 +74,8 @@ const StudentDashboard = () => {
                                             <td>{element.subjectName}</td>
                                             <td>{element.email}</td>
                                             <td>{element._id}</td>
-                                            <td><button>Details</button></td>
-                                            <td><button onClick={() => givenExam(element._id)} disabled={element.Result[0]?._id}>Give Exam</button></td>
+                                            <td><button className="table-btn" onClick={() => viewExamResult(element)} disabled={!element.Result[0]?._id}>Result</button></td>
+                                            <td><button className="table-btn" onClick={() => givenExam(element._id)} disabled={element.Result[0]?._id}>Give Exam</button></td>
                                         </tr>
                                     ))}
                                 </tbody>

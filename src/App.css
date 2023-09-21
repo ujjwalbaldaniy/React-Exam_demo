@@ -1,0 +1,23 @@
+.submit-btn{
+    width: 100%; 
+    padding: 0.4rem 1rem;
+    background-color: #0c7db1;
+    border: none;
+    outline: none;
+    color: white;
+    font-size: 1.1rem;
+    font-weight: bold;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.table-btn{
+    padding: 0.3rem 0.8rem;
+    cursor: pointer;
+}
+
+.title-heading{
+    text-align: center;
+    color: #0c7db1;
+    padding: 20px 0;
+}

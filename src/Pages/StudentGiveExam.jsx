@@ -5,6 +5,7 @@ import { postGiveExam, studentExamPaper } from "../Services/allApi";
 import StudentGiveExamForm from "./StudentGiveExamForm";
 import Loader from "../Components/Loader";
 import { toast } from "react-toastify";
+import '../Styles/studentGiveExam.css'
 
 const StudentGiveExam = () => {
     const params = useParams()
@@ -25,7 +26,6 @@ const StudentGiveExam = () => {
                 console.log(error);
             })
     }, [params.id])
-    // console.log(questions);
 
     const handleRadioBtnChange = (e) => {
         const updatedRadioBtnQuestions = [...questions];
@@ -54,7 +54,7 @@ const StudentGiveExam = () => {
         e.preventDefault()
         console.log(questions)
         const aaa = questions.map((element, index) => ({
-            question: element.question,
+            question: element._id,
             answer: element.answer
         }))
         console.log("aaaa", aaa);
@@ -76,16 +76,15 @@ const StudentGiveExam = () => {
             answer: element.answer
         }))
         setNewQuestionData(aaa);
-        localStorage.setItem("xyz", JSON.stringify(questions))
+        localStorage.setItem("7Question", JSON.stringify(questions))
     }
 
     const editIndex = (id) => {
         console.log(id);
         setActiveQuestion(id)
         setToggle(true)
-        const newxyzData = JSON.parse(localStorage.getItem("xyz"));
-        console.log(newxyzData);
-        setQuestions([...newxyzData])
+        const storeQuestionData = JSON.parse(localStorage.getItem("7Question"));
+        setQuestions([...storeQuestionData])
     }
 
     const examInputList = [
@@ -139,7 +138,7 @@ const StudentGiveExam = () => {
                     <div className="teacher_mainbar">
                         {toggle ? (
                             <>
-                                <h1>Student Give Exam</h1>
+                                <h1 className="title-heading">Student Give Exam</h1>
                                 <div className="exam_container">
                                     <h3>Question {activeQuestion + 1}</h3>
                                     <div>
@@ -154,20 +153,23 @@ const StudentGiveExam = () => {
                             </>
                         ) : (
                             <>
+                                <h1 className="title-heading">Preview your Exam</h1>
                                 {newQuestionData.length && newQuestionData.map((data, index) => {
                                     console.log(data);
 
                                     return (
-                                        <div key={index}>
+                                        <div key={index} className="give_exam-div">
+                                            <div className="give_exam-ques">
+                                                <h3>{data.question}</h3>
+                                                <p>{data.answer}</p>
+                                            </div>
                                             <div>
-                                                <h1>{data.question}</h1>
-                                                <h1>{data.answer}</h1>
-                                                <h3 onClick={() => editIndex(index)}>Edit</h3>
+                                                <button className="submit-btn" onClick={() => editIndex(index)}>Edit</button>
                                             </div>
                                         </div>
                                     );
                                 })}
-                                <button onClick={handleSubmit}>Submit</button>
+                                <button className="login_btn" onClick={handleSubmit}>Submit</button>
                             </>
                         )}
                     </div>

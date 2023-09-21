@@ -56,7 +56,7 @@ const VerifiedStudent = () => {
                 {loading ? <Loader /> : (
                     <div className="teacher_mainbar">
                         <div className="studentData_container">
-                            <h1>Verified Students List</h1>
+                            <h1 className="title-heading">Verified Students List</h1>
                             <table>
                                 <thead>
                                     <tr>
@@ -73,7 +73,7 @@ const VerifiedStudent = () => {
                                             <td>{element.name}</td>
                                             <td>{element.email}</td>
                                             <td>{element._id}</td>
-                                            <td onClick={() => studentView(element._id)}><button>View</button></td>
+                                            <td><button className="table-btn" onClick={() => studentView(element._id)} >View</button></td>
                                         </tr>
                                     ))}
                                 </tbody>

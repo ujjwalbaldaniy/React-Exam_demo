@@ -15,7 +15,7 @@ const TeacherProfile = () => {
                 </div>
                 <div className="teacher_mainbar">
                     <div className="profile_contailer">
-                        <h1>Your Profile</h1>
+                        <h1 className="title-heading">Your Profile</h1>
                         <div className="profile_div">
                             <img src={avatar} alt="avatar_image" className="avatar_image" />
                             <p>Name :- {localStorageData.name}</p>

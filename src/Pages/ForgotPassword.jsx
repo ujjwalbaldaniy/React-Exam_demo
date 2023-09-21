@@ -12,7 +12,6 @@ const ForgotPassword = () => {
         email: "",
     });
 
-
     const forgotPwChange = (e) => {
         const { name, value } = e.target
         const error = formValidation(name, value);

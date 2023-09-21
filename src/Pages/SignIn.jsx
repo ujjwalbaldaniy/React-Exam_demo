@@ -48,10 +48,6 @@ const SignIn = () => {
                                 navigate('/studentDashboard')
                             }
                             toast.success(res.data.message)
-                            setSigninField({
-                                email: "",
-                                password: ""
-                            })
                         } else {
                             return res.data.data;
                         }

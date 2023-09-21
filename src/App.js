@@ -19,6 +19,7 @@ import StudentDashboard from "./Pages/StudentDashboard";
 import StudentGiveExam from "./Pages/StudentGiveExam";
 import StudentProfile from "./Pages/StudentProfile";
 import StudentNameChange from "./Pages/StudentNameChange";
+import StudentResult from "./Pages/StudentResult";
 
 function App() {
   return (
@@ -42,14 +43,9 @@ function App() {
             <Route path="/teacherDashboard" element={<TeacherDashboard />} />
             <Route path="/createExam" element={<CreateExam />} />
             <Route path="/verifiedStudent" element={<VerifiedStudent />} />
-            <Route
-              path="/verifiedStudent/:id"
-              element={<ViewStudentDeatils />}
-            />
             <Route path="/editExam/:editExamId" element={<EditExam />} />
-            
             <Route path="/teacherProfile" element={<TeacherProfile />} />
-
+            <Route path="/verifiedStudent/:id" element={<ViewStudentDeatils />}/>
           </Route>
 
           <Route path="/" element={<StudentPrivate />}>
@@ -57,6 +53,7 @@ function App() {
             <Route path="/studentDashboard/:id" element={<StudentGiveExam />} />
             <Route path="/studentProfile" element={<StudentProfile />} />
             <Route path="/studentNameChange" element={<StudentNameChange />} />
+            <Route path="/studentResult" element={<StudentResult />} />
           </Route>
 
           <Route path="/signup" element={<SignUp />} />

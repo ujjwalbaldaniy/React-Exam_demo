@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import Form from "../Components/Form";
-import { NavLink, useNavigate } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import { toast } from "react-toastify";
 import { postSignupData } from "../Services/allApi";
 import formValidation from "../utils/validation";
@@ -24,8 +24,6 @@ const dropdownList = [
 ]
 
 const SignUp = () => {
-    const navigate = useNavigate()
-
     const [signupField, setSignupField] = useState({
         name: "",
         email: "",
@@ -41,6 +39,7 @@ const SignUp = () => {
     const handleSignupChange = (e) => {
         const { name, value } = e.target
         const error = formValidation(name, value);
+
         setFormErrors({
             ...formErrors,
             [name]: error,
@@ -63,28 +62,12 @@ const SignUp = () => {
                     if (res.data.statusCode === 500) {
                         toast.error(res.data.message)
                     } else {
-                        if (res.data.data.token) {
-                            localStorage.setItem("user", JSON.stringify(res.data.data));
-                            if (res.data.data.role === "teacher") {
-                                navigate('/teacherDashboard')
-                            } else if (res.data.data.role === "student") {
-                                navigate('/studentDashboard')
-                            }
-                            toast.success(res.data.message)
-                        } else {
-                            return res.data.data;
-                        }
+                        toast.success(res.data.message)
                     }
                 }).catch((error) => {
                     console.log(error);
                     toast.error(error.message)
                 })
-
-            setSignupField({
-                name: "",
-                email: "",
-                password: "",
-            })
         }
     }
 
@@ -118,7 +101,6 @@ const SignUp = () => {
         },
     ]
 
-
     return (
         <>
             <div className="employee-form">
@@ -126,7 +108,7 @@ const SignUp = () => {
                     <h1 className="login_title">Sign Up</h1>
                     <form className="login_form" onSubmit={handleSignupSubmit}>
                         <Form inputs={inputs} />
-                        <select value={dropdown.role} onChange={(e) => setDropdown(e.target.value)} defaultValue={'DEFAULT'} className="select_dropdown" >
+                        <select value={dropdown.role} onChange={(e) => setDropdown(e.target.value)} defaultValue={'DEFAULT'} required className="select_dropdown" >
                             {dropdownList.map((element, index) => (
                                 <option key={index + 1} {...element}>{element.name}</option>
                             ))}

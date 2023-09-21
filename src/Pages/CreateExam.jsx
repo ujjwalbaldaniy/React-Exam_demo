@@ -8,7 +8,6 @@ import CreateExamForm from "../Components/CreateExamForm";
 
 const CreateExam = () => {
     const navigate = useNavigate()
-    // const params = useParams()
     const location = useLocation()
     const [activeQuestion, setActiveQuestion] = useState(0)
     const [examState, setExamState] = useState({
@@ -73,7 +72,6 @@ const CreateExam = () => {
                 .then((res) => {
                     console.log(res.data.data.questions);
                     setQuestions(res.data.data.questions)
-                    // console.log(res.data.data.questions.map((item) => item.answer))
                     setSelectRadioBtnAnswer(res.data.data.questions.map((item) => item.answer))
                     setExamState(location.state)
                 })
@@ -85,9 +83,7 @@ const CreateExam = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault()
-
         if (location.state.toggle) {
-
             createExamPost(examFormData)
                 .then((res) => {
                     console.log(res);
@@ -186,7 +182,7 @@ const CreateExam = () => {
                     <TeacherSideBar />
                 </div>
                 <div className="teacher_mainbar">
-                    <h1>{location.state.toggle ? "Create" : "Edit"} Exam</h1>
+                    <h1 className="title-heading">{location.state.toggle ? "Create" : "Edit"} Exam</h1>
                     <div className="exam_container">
                         <h3>Question {activeQuestion + 1}</h3>
                         <div>

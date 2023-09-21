@@ -3,21 +3,7 @@ import { useLocation } from "react-router-dom";
 import Form from "../Components/Form";
 import { confirmPassword } from "../Services/allApi";
 import { toast } from "react-toastify";
-
-const confirmPasswordList = [
-    {
-        name: "Password",
-        type: "password",
-        placeholder: "Password",
-        lable: "Password :- "
-    },
-    {
-        name: "ConfirmPassword",
-        type: "password",
-        placeholder: "Confirm Password",
-        lable: "Confirm Password :- "
-    },
-]
+import formValidation from "../utils/validation";
 
 const NewPassword = () => {
     const location = useLocation();
@@ -26,9 +12,18 @@ const NewPassword = () => {
         Password: "",
         ConfirmPassword: "",
     });
+    const [formErrors, setFormErrors] = useState({
+        Password: "",
+        ConfirmPassword: "",
+    });
 
     const confirmPasswordChange = (e) => {
         const { name, value } = e.target
+        const error = formValidation(name, value, confirmPasswordField.Password);
+        setFormErrors({
+            ...formErrors,
+            [name]: error,
+        });
         setConfirmPasswordField({
             ...confirmPasswordField,
             [name]: value
@@ -37,25 +32,45 @@ const NewPassword = () => {
 
     const confirmPasswordSubmit = (e) => {
         e.preventDefault()
-        if (confirmPasswordField.Password && confirmPasswordField.ConfirmPassword) {
-            console.log(confirmPasswordField);
-
-            setConfirmPasswordField({
-                Password: "",
-                ConfirmPassword: "",
-            })
-
+        if (Object.values(confirmPasswordField).some((value) => value === "")) {
+            toast.error("Please enter all Fields");
+        } else {
             confirmPassword(location.search, confirmPasswordField)
-            .then((res) => {
-                console.log(res)
-                toast.success(res.data.message)
-            })
-            .catch((error) => {
-                console.log(error)
-                toast.error(error.response.data.message)
-            })
+                .then((res) => {
+                    console.log(res)
+                    toast.success(res.data.message)
+                    setConfirmPasswordField({
+                        Password: "",
+                        ConfirmPassword: "",
+                    })
+                })
+                .catch((error) => {
+                    console.log(error)
+                    toast.error(error.response.data.message)
+                })
         }
     }
+
+    const confirmPasswordList = [
+        {
+            name: "Password",
+            type: "password",
+            placeholder: "Password",
+            lable: "Password :- ",
+            showerrors: formErrors.Password,
+            onChange: confirmPasswordChange,
+            value: confirmPasswordField.Password,
+        },
+        {
+            name: "ConfirmPassword",
+            type: "password",
+            placeholder: "Confirm Password",
+            lable: "Confirm Password :- ",
+            showerrors: formErrors.ConfirmPassword,
+            onChange: confirmPasswordChange,
+            value: confirmPasswordField.ConfirmPassword,
+        },
+    ]
 
     return (
         <>

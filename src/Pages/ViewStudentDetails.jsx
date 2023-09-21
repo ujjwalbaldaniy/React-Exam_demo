@@ -62,7 +62,7 @@ const ViewStudentDeatils = () => {
                                 ))}
                             </div>
                             <div className="singleData_exam">
-                                <h1>List of Given Exam</h1>
+                                <h1 style={{color:"#0c7db1"}}>List of Given Exam</h1>
                                 <table>
                                     <thead>
                                         <tr >

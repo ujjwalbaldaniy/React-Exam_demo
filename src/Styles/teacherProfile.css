@@ -2,11 +2,6 @@
     width: 500px;
 }
 
-.profile_contailer h1 {
-    text-align: center;
-    margin: 2rem 0;
-}
-
 .profile_div {
     box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
     display: flex;

@@ -3,34 +3,19 @@ import Form from "../Components/Form";
 import { userResetPassword } from "../Services/allApi";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
-
-const inputs = [
-    {
-        name: "oldPassword",
-        type: "password",
-        placeholder: "old password",
-        lable: "Old Password :- "
-    },
-    {
-        name: "Password",
-        type: "password",
-        placeholder: "password",
-        lable: "Password :- "
-    },
-    {
-        name: "ConfirmPassword",
-        type: "password",
-        placeholder: "confirm password",
-        lable: "Confirm Password :- "
-    },
-]
+import formValidation from "../utils/validation";
 
 const ResetPassword = () => {
     const navigate = useNavigate()
     const localStorageData = JSON.parse(localStorage.getItem("user"));
-    console.log(localStorageData.role);
+    // console.log(localStorageData.role);
 
     const [resetPasswordField, setResetPasswordField] = useState({
+        oldPassword: "",
+        Password: "",
+        ConfirmPassword: "",
+    });
+    const [formErrors, setFormErrors] = useState({
         oldPassword: "",
         Password: "",
         ConfirmPassword: "",
@@ -38,6 +23,11 @@ const ResetPassword = () => {
 
     const resetPasswordChange = (e) => {
         const { name, value } = e.target
+        const error = formValidation(name, value, resetPasswordField.Password);
+        setFormErrors({
+            ...formErrors,
+            [name]: error,
+        });
         setResetPasswordField({
             ...resetPasswordField,
             [name]: value
@@ -46,9 +36,9 @@ const ResetPassword = () => {
 
     const resetPasswordSubmit = (e) => {
         e.preventDefault()
-        if (resetPasswordField.oldPassword && resetPasswordField.Password && resetPasswordField.ConfirmPassword) {
-            console.log(resetPasswordField);
-
+        if (Object.values(resetPasswordField).some((value) => value === "")) {
+            toast.error("Please enter all Fields");
+        } else {
             userResetPassword(resetPasswordField)
                 .then((res) => {
                     console.log(res)
@@ -64,13 +54,37 @@ const ResetPassword = () => {
                     toast.error(error.response.data.message)
                 })
         }
-
-        setResetPasswordField({
-            oldPassword: "",
-            Password: "",
-            ConfirmPassword: "",
-        })
     }
+
+    const inputs = [
+        {
+            name: "oldPassword",
+            type: "password",
+            placeholder: "old password",
+            lable: "Old Password :- ",
+            showerrors: formErrors.oldPassword,
+            onChange: resetPasswordChange,
+            value: resetPasswordField.oldPassword,
+        },
+        {
+            name: "Password",
+            type: "password",
+            placeholder: "password",
+            lable: "Password :- ",
+            showerrors: formErrors.Password,
+            onChange: resetPasswordChange,
+            value: resetPasswordField.Password,
+        },
+        {
+            name: "ConfirmPassword",
+            type: "password",
+            placeholder: "confirm password",
+            lable: "Confirm Password :- ",
+            showerrors: formErrors.ConfirmPassword,
+            onChange: resetPasswordChange,
+            value: resetPasswordField.ConfirmPassword,
+        },
+    ]
 
 
     return (

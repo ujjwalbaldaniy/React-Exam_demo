@@ -10,25 +10,23 @@ const StudentGiveExamForm = ({ examInputList, activeQuestion, questions, setQues
                             <label>{input.label}</label>
                             {input.type === "radio" ? (
                                 <div>
-                                    {input.options.map((option, optionIndex) => {
-                                        return (
-                                            <div key={optionIndex}>
-                                                <input
-                                                    type={input.type}
-                                                    name={`question${activeQuestion}`}
-                                                    value={option}
-                                                    checked={input.answer && input.answer === option}
-                                                    onChange={input.onChange}
-                                                />
-                                                <input
-                                                    type="text"
-                                                    placeholder={`Option ${optionIndex + 1}`}
-                                                    value={option}
-                                                    readOnly={true}
-                                                />
-                                            </div>
-                                        )
-                                    })}
+                                    {input.options.map((option, optionIndex) => (
+                                        <div key={optionIndex}>
+                                            <input
+                                                type={input.type}
+                                                name={`question${activeQuestion}`}
+                                                value={option}
+                                                checked={input.answer === option}
+                                                onChange={input.onChange}
+                                            />
+                                            <input
+                                                type="text"
+                                                placeholder={`Option ${optionIndex + 1}`}
+                                                value={option}
+                                                readOnly={true}
+                                            />
+                                        </div>
+                                    ))}
                                 </div>
                             ) : (
                                 <div >

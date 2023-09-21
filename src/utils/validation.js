@@ -24,6 +24,13 @@ const formValidation = (name, value, passwordValue) => {
       }
       break;
 
+    case "oldPassword":
+      if (value.length < 6) {
+        error = "Password must be at least 6 characters";
+      }
+      break;
+
+    //for signin & signup
     case "password":
       if (value.length < 6) {
         error = "Password must be at least 6 characters";

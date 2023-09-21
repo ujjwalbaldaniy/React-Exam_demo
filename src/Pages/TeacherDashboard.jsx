@@ -22,7 +22,10 @@ const viewExmaTableList = [
         name: "Email id"
     },
     {
-        name: "Actions"
+        name: "Edit Actions"
+    },
+    {
+        name: "Delete Actions"
     },
 ]
 
@@ -83,7 +86,7 @@ const TeacherDashboard = () => {
                 </div>
                 {loading ? <Loader /> : (
                     <div className="teacher_mainbar">
-                        <h1>Teacher Dashboard</h1>
+                        <h1 className="title-heading">Teacher Dashboard</h1>
                         <table>
                             <thead>
                                 <tr>
@@ -99,7 +102,8 @@ const TeacherDashboard = () => {
                                         <td>{element.subjectName}</td>
                                         <td>{element.notes}</td>
                                         <td>{element.email}</td>
-                                        <td><button onClick={() => editExam(element._id, element.subjectName, element.notes)}>Edit Exam</button> <button onClick={() => confirmDelete(element._id)}>Delete Exam</button></td>
+                                        <td><button className="table-btn" onClick={() => editExam(element._id, element.subjectName, element.notes)}>Edit Exam</button></td>
+                                        <td><button className="table-btn" onClick={() => confirmDelete(element._id)}>Delete Exam</button></td>
                                     </tr>
                                 ))}
                             </tbody>

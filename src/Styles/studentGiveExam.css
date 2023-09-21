@@ -1,0 +1,14 @@
+.give_exam-div{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    box-shadow: rgba(0, 0, 0, 0.2) 0px 5px 5px;
+    width: 500px;
+    height: 100px;
+    padding: 0 30px;
+    margin-bottom: 1rem;
+}
+
+.give_exam-ques h3 {
+    margin: 10px 0;
+}
