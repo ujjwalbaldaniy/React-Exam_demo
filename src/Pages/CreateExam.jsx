@@ -127,7 +127,6 @@ const CreateExam = () => {
             selectRadioBtnAnswer
         );
         if (error) {
-
             if (location.state.toggle) {
                 createExamPost(examFormData)
                     .then((res) => {
@@ -169,45 +168,45 @@ const CreateExam = () => {
             label: "Subject Name :- ",
             type: "text",
             name: "subjectName",
-            placeholder: "enter subject name",
+            placeholder: "Subject name",
             value: subjectName,
             onChange: handleExamStateChange,
             disabled: activeQuestion !== 0,
-            showErrors: examFormValidation.subjectName
+            showerrors: examFormValidation.subjectName
         },
         {
             label: "Question :- ",
             type: "text",
-            placeholder: "enter your question",
+            placeholder: "Question name",
             value: questions[activeQuestion]?.question,
             onChange: handleActiveQuestionChange,
-            showErrors: examFormValidation.question,
+            showerrors: examFormValidation.question,
         },
         {
-            label: "Answers :- ",
+            label: "Options :- ",
             type: "radio",
             options: questions[activeQuestion]?.options,
             onChange: handleRadioBtnChange,
             answer: questions[activeQuestion]?.answer,
-            showErrors: examFormValidation.options,
+            showerrors: examFormValidation.options,
         },
         {
             label: "Answer :- ",
             type: "text",
-            placeholder: "answer",
+            placeholder: "Answer",
             value: selectRadioBtnAnswer[activeQuestion],
             readOnly: true,
-            showErrors: examFormValidation.answer,
+            showerrors: examFormValidation.answer,
         },
         {
             label: "Notes :- ",
             type: "text",
             name: "notes",
-            placeholder: "notes",
+            placeholder: "Notes",
             onChange: handleExamStateChange,
             value: notes,
             disabled: activeQuestion !== 0,
-            showErrors: examFormValidation.notes
+            showerrors: examFormValidation.notes
         },
     ];
 
@@ -238,15 +237,14 @@ const CreateExam = () => {
                 <div className="teacher_mainbar">
                     <h1 className="title-heading">{location.state.toggle ? "Create" : "Edit"} Exam</h1>
                     <div className="exam_container">
-                        <h3>Question {activeQuestion + 1}</h3>
                         <div>
                             <form>
                                 <CreateExamForm examInputList={examInputList} activeQuestion={activeQuestion} questions={questions} setQuestions={setQuestions} setExamFormValidation={setExamFormValidation} examFormValidation={examFormValidation} />
                             </form>
                         </div>
-                        <div>
+                        <div className="exam-btn">
                             {buttonList.map((element, index) => (
-                                <button key={index} {...element}>{element.name}</button>
+                                <button className="table-btn" key={index} {...element}>{element.name}</button>
                             ))}
                         </div>
                     </div>

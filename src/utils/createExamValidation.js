@@ -52,3 +52,21 @@ const createExamValidation = (
 };
 
 export default createExamValidation;
+
+const studentExamValidation = (
+  examFormValidation,
+  setExamFormValidation,
+  selectRadioBtnAnswer,
+  activeQuestion
+) => {
+  if (!selectRadioBtnAnswer[activeQuestion]) {
+    setExamFormValidation({
+      ...examFormValidation,
+      answer: "Please Select the Answer",
+    });
+    return false;
+  }
+  return true;
+};
+
+export { studentExamValidation };

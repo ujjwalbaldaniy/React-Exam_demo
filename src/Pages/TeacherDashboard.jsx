@@ -91,6 +91,7 @@ const TeacherDashboard = () => {
                             <thead>
                                 <tr>
                                     {viewExmaTableList.map((element, index) => (
+                                        // <th key={index}>{element}</th>
                                         <th key={index}>{element.name}</th>
                                     ))}
                                 </tr>

@@ -3,16 +3,17 @@ import React from "react";
 const CreateExamForm = ({ examInputList, activeQuestion, questions, setQuestions, examFormValidation, setExamFormValidation }) => {
     return (
         <>
-            <div>
+            <div className="exam_maincontainer">
+                <h3 className="title-heading1">Question {activeQuestion + 1}</h3>
                 {examInputList.map((input, index) => {
                     return (
-                        <div key={index}>
-                            <label>{input.label}</label>
+                        <div key={index} className="exam-container">
+                            {/* <label>{input.label}</label> */}
                             {input.type === "radio" ? (
-                                <div>
+                                <div className="exam_radio-div">
                                     {input.options.map((option, optionIndex) => {
                                         return (
-                                            <div key={optionIndex}>
+                                            <div key={optionIndex} className="exam_option-div">
                                                 <input
                                                     type={input.type}
                                                     name={`question${activeQuestion}`}
@@ -24,6 +25,7 @@ const CreateExamForm = ({ examInputList, activeQuestion, questions, setQuestions
                                                     type="text"
                                                     placeholder={`Option ${optionIndex + 1}`}
                                                     value={option}
+                                                    className="exam_option-text"
                                                     onChange={(e) => {
                                                         const updatedQuestions = [...questions];
                                                         updatedQuestions[activeQuestion].options[optionIndex] = e.target.value;
@@ -40,10 +42,10 @@ const CreateExamForm = ({ examInputList, activeQuestion, questions, setQuestions
                                 </div>
                             ) : (
                                 <div >
-                                    <input {...input} />
+                                    <input {...input} className="exam_allinput" />
                                 </div>
                             )}
-                            {input.showErrors && (<div style={{ color: "red" }}>{input.showErrors}</div>)}
+                            {input.showerrors && (<div style={{ color: "red" }}>{input.showerrors}</div>)}
                         </div>
                     )
                 })}

@@ -6,6 +6,7 @@ import StudentGiveExamForm from "./StudentGiveExamForm";
 import Loader from "../Components/Loader";
 import { toast } from "react-toastify";
 import '../Styles/studentGiveExam.css'
+import { studentExamValidation } from "../utils/createExamValidation";
 
 const StudentGiveExam = () => {
     const params = useParams()
@@ -16,6 +17,9 @@ const StudentGiveExam = () => {
     const [toggle, setToggle] = useState(true);
     const [newQuestionData, setNewQuestionData] = useState([]);
     const [loading, setLoading] = useState(true);
+    const [examFormValidation, setExamFormValidation] = useState({
+        answer: "",
+    });
 
     useEffect(() => {
         studentExamPaper(params.id)
@@ -36,6 +40,11 @@ const StudentGiveExam = () => {
         const selectedAnswersField = [...selectRadioBtnAnswer];
         selectedAnswersField[activeQuestion] = e.target.value;
         setSelectRadioBtnAnswer(selectedAnswersField);
+
+        setExamFormValidation({
+            ...examFormValidation,
+            answer: "",
+        });
     };
 
     const handlePrevious = () => {
@@ -45,8 +54,17 @@ const StudentGiveExam = () => {
     }
 
     const handleNext = () => {
-        if (activeQuestion < 6 ) {
-            setActiveQuestion(activeQuestion + 1)
+        console.log(questions.length && questions[0]?.answer)
+        const error = studentExamValidation(
+            examFormValidation,
+            setExamFormValidation,
+            selectRadioBtnAnswer,
+            activeQuestion
+        );
+        if (error) {
+            if (activeQuestion < 6) {
+                setActiveQuestion(activeQuestion + 1)
+            }
         }
     }
 
@@ -70,7 +88,15 @@ const StudentGiveExam = () => {
     }
 
     const handlePreview = () => {
-        setToggle(false)
+        const error = studentExamValidation(
+            examFormValidation,
+            setExamFormValidation,
+            selectRadioBtnAnswer,
+            activeQuestion
+        );
+        if (error) {
+            setToggle(false)
+        }
         const aaa = questions.map((element, index) => ({
             question: element.question,
             answer: element.answer
@@ -107,6 +133,7 @@ const StudentGiveExam = () => {
             placeholder: "answer",
             value: selectRadioBtnAnswer[activeQuestion],
             readOnly: true,
+            showerrors: examFormValidation.answer,
         },
     ];
 
@@ -140,13 +167,14 @@ const StudentGiveExam = () => {
                             <>
                                 <h1 className="title-heading">Student Give Exam</h1>
                                 <div className="exam_container">
-                                    <h3>Question {activeQuestion + 1}</h3>
                                     <div>
-                                        <StudentGiveExamForm examInputList={examInputList} activeQuestion={activeQuestion} questions={questions} />
+                                        <form>
+                                            <StudentGiveExamForm examInputList={examInputList} activeQuestion={activeQuestion} questions={questions} setExamFormValidation={setExamFormValidation} examFormValidation={examFormValidation} />
+                                        </form>
                                     </div>
-                                    <div>
+                                    <div className="exam-btn">
                                         {buttonList.map((element, index) => (
-                                            <button key={index} {...element}>{element.name}</button>
+                                            <button className="table-btn" key={index} {...element}>{element.name}</button>
                                         ))}
                                     </div>
                                 </div>
