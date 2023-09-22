@@ -45,7 +45,7 @@ const StudentGiveExam = () => {
     }
 
     const handleNext = () => {
-        if (activeQuestion < 14) {
+        if (activeQuestion < 6 ) {
             setActiveQuestion(activeQuestion + 1)
         }
     }

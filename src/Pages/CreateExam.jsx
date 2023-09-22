@@ -5,6 +5,7 @@ import { createExamPost, editExamApi, putExamDataApi } from "../Services/allApi"
 import { toast } from "react-toastify";
 import { useLocation, useNavigate } from "react-router-dom";
 import CreateExamForm from "../Components/CreateExamForm";
+import createExamValidation from "../utils/createExamValidation";
 
 const CreateExam = () => {
     const navigate = useNavigate()
@@ -19,12 +20,22 @@ const CreateExam = () => {
         answer: "",
         options: ["", "", "", ""],
     })));
-
     const [selectRadioBtnAnswer, setSelectRadioBtnAnswer] = useState(Array(15).fill(""));
     const { subjectName, notes } = examState
+    const [examFormValidation, setExamFormValidation] = useState({
+        subjectName: "",
+        question: "",
+        options: "",
+        answer: "",
+        notes: ""
+    });
 
     const handleExamStateChange = (e) => {
         const { name, value } = e.target
+        setExamFormValidation({
+            ...examFormValidation,
+            [name]: "",
+        });
         setExamState({
             ...examState,
             [name]: value
@@ -35,6 +46,10 @@ const CreateExam = () => {
         const allQuestions = [...questions];
         allQuestions[activeQuestion].question = e.target.value;
         setQuestions(allQuestions);
+        setExamFormValidation({
+            ...examFormValidation,
+            question: "",
+        });
     };
 
     const handleRadioBtnChange = (e) => {
@@ -46,6 +61,10 @@ const CreateExam = () => {
         const selectedAnswersField = [...selectRadioBtnAnswer];
         selectedAnswersField[activeQuestion] = e.target.value;
         setSelectRadioBtnAnswer(selectedAnswersField);
+        setExamFormValidation({
+            ...examFormValidation,
+            answer: "",
+        });
     };
 
     const handlePrevious = () => {
@@ -55,15 +74,25 @@ const CreateExam = () => {
     }
 
     const handleNext = () => {
-        if (activeQuestion < 14) {
-            setActiveQuestion(activeQuestion + 1)
+        const error = createExamValidation(
+            examFormValidation,
+            setExamFormValidation,
+            questions,
+            activeQuestion,
+            examState,
+            selectRadioBtnAnswer
+        );
+        if (error) {
+            if (activeQuestion < 14) {
+                setActiveQuestion(activeQuestion + 1)
+            }
         }
     }
 
-    const examFormData = {
+    const examEditData = {
         subjectName: subjectName,
         questions: questions,
-        notes: [notes]
+        notes: notes
     }
 
     useEffect(() => {
@@ -81,37 +110,57 @@ const CreateExam = () => {
         }
     }, [location.state.id, location.state, location.state.toggle])
 
+    const examFormData = {
+        subjectName: subjectName,
+        questions: questions,
+        notes: [notes]
+    }
+
     const handleSubmit = (e) => {
         e.preventDefault()
-        if (location.state.toggle) {
-            createExamPost(examFormData)
-                .then((res) => {
-                    console.log(res);
-                    if (res.data.statusCode === 500) {
-                        toast.error(res.data.message)
-                    } else {
-                        toast.success(res.data.message)
-                        navigate('/teacherDashboard')
-                    }
-                }).catch((error) => {
-                    console.log(error);
-                    toast.error(error.response.data.details.body[0]?.message)
-                })
-        }
-        else {
-            putExamDataApi(examFormData, location.state.id)
-                .then((res) => {
-                    console.log(res);
-                    if (res.data.statusCode === 500) {
-                        toast.error(res.data.message)
-                    } else {
-                        toast.success(res.data.message)
-                        navigate('/teacherDashboard')
-                    }
-                }).catch((error) => {
-                    console.log(error);
-                    toast.error(error.response.data.details.body[0]?.message)
-                })
+        const error = createExamValidation(
+            examFormValidation,
+            setExamFormValidation,
+            questions,
+            activeQuestion,
+            examState,
+            selectRadioBtnAnswer
+        );
+        if (error) {
+
+            if (location.state.toggle) {
+                createExamPost(examFormData)
+                    .then((res) => {
+                        console.log(res);
+                        if (res.data.statusCode === 500) {
+                            toast.error(res.data.message)
+                        } else if (res.data.statusCode === 401) {
+                            toast.error(res.data.message)
+                            navigate('/signin')
+                        } else {
+                            toast.success(res.data.message)
+                            navigate('/teacherDashboard')
+                        }
+                    }).catch((error) => {
+                        console.log(error);
+                        toast.error(error.response.data.details.body[0]?.message)
+                    })
+            }
+            else {
+                putExamDataApi(examEditData, location.state.id)
+                    .then((res) => {
+                        console.log(res);
+                        if (res.data.statusCode === 500) {
+                            toast.error(res.data.message)
+                        } else {
+                            toast.success(res.data.message)
+                            navigate('/teacherDashboard')
+                        }
+                    }).catch((error) => {
+                        console.log(error);
+                        toast.error(error.response.data.details.body[0]?.message)
+                    })
+            }
         }
     }
 
@@ -124,6 +173,7 @@ const CreateExam = () => {
             value: subjectName,
             onChange: handleExamStateChange,
             disabled: activeQuestion !== 0,
+            showErrors: examFormValidation.subjectName
         },
         {
             label: "Question :- ",
@@ -131,6 +181,7 @@ const CreateExam = () => {
             placeholder: "enter your question",
             value: questions[activeQuestion]?.question,
             onChange: handleActiveQuestionChange,
+            showErrors: examFormValidation.question,
         },
         {
             label: "Answers :- ",
@@ -138,6 +189,7 @@ const CreateExam = () => {
             options: questions[activeQuestion]?.options,
             onChange: handleRadioBtnChange,
             answer: questions[activeQuestion]?.answer,
+            showErrors: examFormValidation.options,
         },
         {
             label: "Answer :- ",
@@ -145,6 +197,7 @@ const CreateExam = () => {
             placeholder: "answer",
             value: selectRadioBtnAnswer[activeQuestion],
             readOnly: true,
+            showErrors: examFormValidation.answer,
         },
         {
             label: "Notes :- ",
@@ -154,6 +207,7 @@ const CreateExam = () => {
             onChange: handleExamStateChange,
             value: notes,
             disabled: activeQuestion !== 0,
+            showErrors: examFormValidation.notes
         },
     ];
 
@@ -187,7 +241,7 @@ const CreateExam = () => {
                         <h3>Question {activeQuestion + 1}</h3>
                         <div>
                             <form>
-                                <CreateExamForm examInputList={examInputList} activeQuestion={activeQuestion} questions={questions} setQuestions={setQuestions} />
+                                <CreateExamForm examInputList={examInputList} activeQuestion={activeQuestion} questions={questions} setQuestions={setQuestions} setExamFormValidation={setExamFormValidation} examFormValidation={examFormValidation} />
                             </form>
                         </div>
                         <div>

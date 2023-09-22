@@ -1,6 +1,6 @@
 import React from "react";
 
-const CreateExamForm = ({ examInputList, activeQuestion, questions, setQuestions }) => {
+const CreateExamForm = ({ examInputList, activeQuestion, questions, setQuestions, examFormValidation, setExamFormValidation }) => {
     return (
         <>
             <div>
@@ -28,6 +28,10 @@ const CreateExamForm = ({ examInputList, activeQuestion, questions, setQuestions
                                                         const updatedQuestions = [...questions];
                                                         updatedQuestions[activeQuestion].options[optionIndex] = e.target.value;
                                                         setQuestions(updatedQuestions);
+                                                        setExamFormValidation({
+                                                            ...examFormValidation,
+                                                            options: "",
+                                                        });
                                                     }}
                                                 />
                                             </div>
@@ -39,6 +43,7 @@ const CreateExamForm = ({ examInputList, activeQuestion, questions, setQuestions
                                     <input {...input} />
                                 </div>
                             )}
+                            {input.showErrors && (<div style={{ color: "red" }}>{input.showErrors}</div>)}
                         </div>
                     )
                 })}
