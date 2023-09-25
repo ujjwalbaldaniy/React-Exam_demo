@@ -6,6 +6,7 @@ import { toast } from "react-toastify";
 import { useLocation, useNavigate } from "react-router-dom";
 import CreateExamForm from "../Components/CreateExamForm";
 import createExamValidation from "../utils/createExamValidation";
+import { examInputFieldList } from "../utils/description";
 
 const CreateExam = () => {
     const navigate = useNavigate()
@@ -71,6 +72,13 @@ const CreateExam = () => {
         if (activeQuestion > 0) {
             setActiveQuestion(activeQuestion - 1)
         }
+        setExamFormValidation({
+            subjectName: "",
+            question: "",
+            options: "",
+            answer: "",
+            notes: ""
+        })
     }
 
     const handleNext = () => {
@@ -138,7 +146,7 @@ const CreateExam = () => {
                             navigate('/signin')
                         } else {
                             toast.success(res.data.message)
-                            navigate('/teacherDashboard')
+                            navigate('/teacher/dashboard')
                         }
                     }).catch((error) => {
                         console.log(error);
@@ -153,7 +161,7 @@ const CreateExam = () => {
                             toast.error(res.data.message)
                         } else {
                             toast.success(res.data.message)
-                            navigate('/teacherDashboard')
+                            navigate('/teacher/dashboard')
                         }
                     }).catch((error) => {
                         console.log(error);
@@ -163,52 +171,15 @@ const CreateExam = () => {
         }
     }
 
-    const examInputList = [
-        {
-            label: "Subject Name :- ",
-            type: "text",
-            name: "subjectName",
-            placeholder: "Subject name",
-            value: subjectName,
-            onChange: handleExamStateChange,
-            disabled: activeQuestion !== 0,
-            showerrors: examFormValidation.subjectName
-        },
-        {
-            label: "Question :- ",
-            type: "text",
-            placeholder: "Question name",
-            value: questions[activeQuestion]?.question,
-            onChange: handleActiveQuestionChange,
-            showerrors: examFormValidation.question,
-        },
-        {
-            label: "Options :- ",
-            type: "radio",
-            options: questions[activeQuestion]?.options,
-            onChange: handleRadioBtnChange,
-            answer: questions[activeQuestion]?.answer,
-            showerrors: examFormValidation.options,
-        },
-        {
-            label: "Answer :- ",
-            type: "text",
-            placeholder: "Answer",
-            value: selectRadioBtnAnswer[activeQuestion],
-            readOnly: true,
-            showerrors: examFormValidation.answer,
-        },
-        {
-            label: "Notes :- ",
-            type: "text",
-            name: "notes",
-            placeholder: "Notes",
-            onChange: handleExamStateChange,
-            value: notes,
-            disabled: activeQuestion !== 0,
-            showerrors: examFormValidation.notes
-        },
-    ];
+    const examInputList = examInputFieldList(subjectName,
+        handleExamStateChange,
+        activeQuestion,
+        examFormValidation,
+        questions,
+        handleActiveQuestionChange,
+        handleRadioBtnChange,
+        selectRadioBtnAnswer,
+        notes)
 
     const buttonList = [
         {

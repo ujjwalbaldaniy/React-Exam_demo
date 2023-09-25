@@ -4,6 +4,8 @@ import Form from "../Components/Form";
 import { confirmPassword } from "../Services/allApi";
 import { toast } from "react-toastify";
 import formValidation from "../utils/validation";
+import Navbar from "../Components/Navbar";
+import { confirmPasswordFieldList } from "../utils/description";
 
 const NewPassword = () => {
     const location = useLocation();
@@ -51,29 +53,11 @@ const NewPassword = () => {
         }
     }
 
-    const confirmPasswordList = [
-        {
-            name: "Password",
-            type: "password",
-            placeholder: "Password",
-            lable: "Password :- ",
-            showerrors: formErrors.Password,
-            onChange: confirmPasswordChange,
-            value: confirmPasswordField.Password,
-        },
-        {
-            name: "ConfirmPassword",
-            type: "password",
-            placeholder: "Confirm Password",
-            lable: "Confirm Password :- ",
-            showerrors: formErrors.ConfirmPassword,
-            onChange: confirmPasswordChange,
-            value: confirmPasswordField.ConfirmPassword,
-        },
-    ]
+    const confirmPasswordList = confirmPasswordFieldList(formErrors, confirmPasswordChange, confirmPasswordField)
 
     return (
         <>
+            <Navbar />
             <div className="employee-form">
                 <div className="login_container">
                     <h1 className="login_title">Confirm Password</h1>

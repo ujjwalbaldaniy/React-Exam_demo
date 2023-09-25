@@ -4,26 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { verifiedStudentDataForGiveExam } from "../Services/allApi";
 import Loader from "../Components/Loader";
 
-const verifiedStudentTableList = [
-    {
-        name: "No"
-    },
-    {
-        name: "Status"
-    },
-    {
-        name: "Name"
-    },
-    {
-        name: "Email"
-    },
-    {
-        name: "Id"
-    },
-    {
-        name: "Action"
-    },
-]
+const verifiedStudentTableList = ["No", "Status", "Name", "Email", "Id", "Action"]
 
 const VerifiedStudent = () => {
     const navigate = useNavigate()
@@ -44,7 +25,7 @@ const VerifiedStudent = () => {
     }, [navigate])
 
     const studentView = (id) => {
-        navigate(`/verifiedStudent/${id}`)
+        navigate(`/teacher/verifiedStudent/${id}`)
     }
 
     return (
@@ -61,7 +42,7 @@ const VerifiedStudent = () => {
                                 <thead>
                                     <tr>
                                         {verifiedStudentTableList.map((element, index) => (
-                                            <th key={index}>{element.name}</th>
+                                            <th key={index}>{element}</th>
                                         ))}
                                     </tr>
                                 </thead>

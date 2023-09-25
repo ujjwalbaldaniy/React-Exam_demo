@@ -4,6 +4,8 @@ import { NavLink } from "react-router-dom";
 import { toast } from "react-toastify";
 import { postSignupData } from "../Services/allApi";
 import formValidation from "../utils/validation";
+import Navbar from "../Components/Navbar";
+import { signUpFieldList } from "../utils/description";
 
 const dropdownList = [
     {
@@ -71,43 +73,16 @@ const SignUp = () => {
         }
     }
 
-    const inputs = [
-        {
-            name: "name",
-            type: "text",
-            placeholder: "name",
-            lable: "Name :- ",
-            showerrors: formErrors.name,
-            onChange: handleSignupChange,
-            value: signupField.name,
-        },
-        {
-            name: "email",
-            type: "email",
-            placeholder: "email",
-            lable: "Email Id :- ",
-            showerrors: formErrors.email,
-            onChange: handleSignupChange,
-            value: signupField.email,
-        },
-        {
-            name: "password",
-            type: "password",
-            placeholder: "password",
-            lable: "Password :- ",
-            showerrors: formErrors.password,
-            onChange: handleSignupChange,
-            value: signupField.password,
-        },
-    ]
+    const signUpList = signUpFieldList(formErrors, handleSignupChange, signupField)
 
     return (
         <>
+            <Navbar />
             <div className="employee-form">
                 <div className="login_container">
                     <h1 className="login_title">Sign Up</h1>
                     <form className="login_form" onSubmit={handleSignupSubmit}>
-                        <Form inputs={inputs} />
+                        <Form inputs={signUpList} />
                         <select value={dropdown.role} onChange={(e) => setDropdown(e.target.value)} defaultValue={'DEFAULT'} required className="select_dropdown" >
                             {dropdownList.map((element, index) => (
                                 <option key={index + 1} {...element}>{element.name}</option>

@@ -89,7 +89,7 @@ const EditExam = () => {
                     toast.error(res.data.message)
                 } else {
                     toast.success(res.data.message)
-                    navigate('/teacherDashboard')
+                    navigate('/teacher/dashboard')
                 }
             }).catch((error) => {
                 console.log(error);

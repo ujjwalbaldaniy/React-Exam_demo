@@ -4,6 +4,8 @@ import { Link, NavLink, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { postSigninData } from "../Services/allApi";
 import formValidation from "../utils/validation";
+import Navbar from "../Components/Navbar";
+import { signInFieldList } from "../utils/description";
 
 const SignIn = () => {
     const navigate = useNavigate()
@@ -43,9 +45,9 @@ const SignIn = () => {
                         if (res.data.data.token) {
                             localStorage.setItem("user", JSON.stringify(res.data.data));
                             if (res.data.data.role === "teacher") {
-                                navigate('/teacherDashboard')
+                                navigate('/teacher/dashboard')
                             } else if (res.data.data.role === "student") {
-                                navigate('/studentDashboard')
+                                navigate('/student/dashboard')
                             }
                             toast.success(res.data.message)
                         } else {
@@ -59,34 +61,16 @@ const SignIn = () => {
         }
     }
 
-    const inputs = [
-        {
-            name: "email",
-            type: "email",
-            placeholder: "email",
-            lable: "Email Id :- ",
-            showerrors: formErrors.email,
-            onChange: handleSigninChange,
-            value: signinField.email,
-        },
-        {
-            name: "password",
-            type: "password",
-            placeholder: "password",
-            lable: "Password :- ",
-            showerrors: formErrors.password,
-            onChange: handleSigninChange,
-            value: signinField.password,
-        },
-    ]
+    const signInList = signInFieldList(formErrors, handleSigninChange, signinField)
 
     return (
         <>
+            <Navbar />
             <div className="employee-form">
                 <div className="login_container">
                     <h1 className="login_title">Sign In</h1>
                     <form className="login_form" onSubmit={handleSigninSubmit}>
-                        <Form inputs={inputs} />
+                        <Form inputs={signInList} />
                         <Link to='/forgotPassword' style={{ cursor: 'pointer' }}>Forgot your password?</Link>
                         <button type="submit" className="login_btn">Submit</button>
                     </form>

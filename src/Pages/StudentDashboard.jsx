@@ -4,26 +4,7 @@ import { allExamForStudent } from "../Services/allApi";
 import { useNavigate } from "react-router-dom";
 import Loader from "../Components/Loader";
 
-const studnetTableList = [
-    {
-        name: "No."
-    },
-    {
-        name: "Subject Name"
-    },
-    {
-        name: "Email"
-    },
-    {
-        name: "Id"
-    },
-    {
-        name: "Action"
-    },
-    {
-        name: "Action"
-    },
-]
+const studnetTableList = ["No","Subject Name","Email", "Id", "Action", "Action"]
 
 const StudentDashboard = () => {
     const navigate = useNavigate()
@@ -42,11 +23,11 @@ const StudentDashboard = () => {
     }, [])
 
     const givenExam = (id) => {
-        navigate(`/studentDashboard/${id}`)
+        navigate(`/student/dashboard/${id}`)
     }
 
     const viewExamResult = (data) => {
-        navigate('/studentResult', { state: data })
+        navigate('/student/result', { state: data })
     }
 
     return (
@@ -63,7 +44,7 @@ const StudentDashboard = () => {
                                 <thead>
                                     <tr>
                                         {studnetTableList.map((element, index) => (
-                                            <th key={index}>{element.name}</th>
+                                            <th key={index}>{element}</th>
                                         ))}
                                     </tr>
                                 </thead>

@@ -8,16 +8,16 @@ const TeacherSideBar = () => {
             <div className="teacher_sidebar_menu">
                 <ul>
                     <li>
-                        <NavLink to='/teacherDashboard'>DashBoard</NavLink>
+                        <NavLink to='/teacher/dashboard'>DashBoard</NavLink>
                     </li>
                     <li>
-                        <NavLink to='/createExam' state={{ toggle: true }} >Create Exam</NavLink>
+                        <NavLink to='/teacher/createExam' state={{ toggle: true }} >Create Exam</NavLink>
                     </li>
                     <li>
-                        <NavLink to='/verifiedStudent'>Verified Student</NavLink>
+                        <NavLink to='/teacher/verifiedStudent'>Verified Student</NavLink>
                     </li>
                     <li>
-                        <NavLink to='/teacherProfile'>Profile</NavLink>
+                        <NavLink to='/teacher/profile'>Profile</NavLink>
                     </li>
                 </ul>
             </div>

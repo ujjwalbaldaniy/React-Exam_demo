@@ -2,23 +2,7 @@ import React from "react";
 import { useLocation } from "react-router-dom";
 import StudentSideBar from "./StudentSideBar";
 
-const studentResultList = [
-    {
-        name: "No"
-    },
-    {
-        name: "Subject Name"
-    },
-    {
-        name: "Rank"
-    },
-    {
-        name: "Result Status"
-    },
-    {
-        name: "Score"
-    },
-]
+const studentResultList = ["No", "Subject Name", "Rank", "Result Status", "Score"]
 
 const StudentResult = () => {
     const location = useLocation()
@@ -37,7 +21,7 @@ const StudentResult = () => {
                             <thead>
                                 <tr >
                                     {studentResultList.map((element, index) => (
-                                        <th key={index}>{element.name}</th>
+                                        <th key={index}>{element}</th>
                                     ))}
                                 </tr>
                             </thead>

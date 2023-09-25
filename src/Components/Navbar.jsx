@@ -16,7 +16,7 @@ const Navbar = () => {
         <>
             <div className="navbar">
                 <div className="logo">
-                    {data && data.role === "teacher" ? <Link to="/teacherDashboard">Teacher Module</Link> : data && data.role === "student" ? <Link to="/studentDashboard">Student Module</Link> : <Link to="/signin">Exam</Link>}
+                    {data && data.role === "teacher" ? <Link to="/teacher/dashboard">Teacher Module</Link> : data && data.role === "student" ? <Link to="/student/dashboard">Student Module</Link> : <Link to="/signin">Exam</Link>}
                 </div>
                 {data ? <div className="logout">
                     <h3 className="userName">Hello {data.name}</h3>

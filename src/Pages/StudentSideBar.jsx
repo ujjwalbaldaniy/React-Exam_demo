@@ -8,10 +8,10 @@ const StudentSideBar = () => {
             <div className="teacher_sidebar_menu">
                 <ul>
                     <li>
-                        <NavLink to='/studentDashboard'>DashBoard</NavLink>
+                        <NavLink to='/student/dashboard'>DashBoard</NavLink>
                     </li>
                     <li>
-                        <NavLink to='/studentProfile'>Profile</NavLink>
+                        <NavLink to='/student/profile'>Profile</NavLink>
                     </li>
                 </ul>
             </div>

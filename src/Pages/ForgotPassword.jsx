@@ -3,6 +3,8 @@ import Form from "../Components/Form";
 import { forgotPassword } from "../Services/allApi";
 import { toast } from "react-toastify";
 import formValidation from "../utils/validation";
+import Navbar from "../Components/Navbar";
+import { forgotPasswordFieldList } from "../utils/description";
 
 const ForgotPassword = () => {
     const [forgotPwField, setForgotPwField] = useState({
@@ -45,20 +47,11 @@ const ForgotPassword = () => {
         }
     }
 
-    const forgotPasswordListData = [
-        {
-            name: "email",
-            type: "email",
-            placeholder: "email",
-            lable: "Email Id :- ",
-            showerrors: formErrors.email,
-            onChange: forgotPwChange,
-            value: forgotPwField.email,
-        },
-    ]
+    const forgotPasswordListData = forgotPasswordFieldList(formErrors, forgotPwChange, forgotPwField)
 
     return (
         <>
+            <Navbar />
             <div className="employee-form">
                 <div className="login_container">
                     <h1 className="login_title">Forgot Password</h1>

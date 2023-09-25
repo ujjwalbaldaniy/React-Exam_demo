@@ -7,6 +7,7 @@ import Loader from "../Components/Loader";
 import { toast } from "react-toastify";
 import '../Styles/studentGiveExam.css'
 import { studentExamValidation } from "../utils/createExamValidation";
+import { studentExamInputFieldList } from "../utils/description";
 
 const StudentGiveExam = () => {
     const params = useParams()
@@ -81,7 +82,7 @@ const StudentGiveExam = () => {
             .then((res) => {
                 console.log(res);
                 toast.success(res.data.message)
-                navigate('/studentDashboard')
+                navigate('/student/dashboard')
             }).catch((error) => {
                 console.log(error);
             })
@@ -113,29 +114,7 @@ const StudentGiveExam = () => {
         setQuestions([...storeQuestionData])
     }
 
-    const examInputList = [
-        {
-            label: "Question :- ",
-            type: "text",
-            value: questions[activeQuestion]?.question,
-            readOnly: true,
-        },
-        {
-            label: "Answers :- ",
-            type: "radio",
-            options: questions[activeQuestion]?.options,
-            onChange: handleRadioBtnChange,
-            answer: questions[activeQuestion]?.answer,
-        },
-        {
-            label: "Answer :- ",
-            type: "text",
-            placeholder: "answer",
-            value: selectRadioBtnAnswer[activeQuestion],
-            readOnly: true,
-            showerrors: examFormValidation.answer,
-        },
-    ];
+    const examInputList = studentExamInputFieldList(questions, activeQuestion, handleRadioBtnChange, selectRadioBtnAnswer, examFormValidation)
 
     const buttonList = [
         {

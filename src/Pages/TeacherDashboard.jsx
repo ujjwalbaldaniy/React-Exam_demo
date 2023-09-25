@@ -8,26 +8,7 @@ import { confirmAlert } from "react-confirm-alert";
 import 'react-confirm-alert/src/react-confirm-alert.css';
 import Loader from "../Components/Loader";
 
-const viewExmaTableList = [
-    {
-        name: "No"
-    },
-    {
-        name: "Subject Name"
-    },
-    {
-        name: "Notes"
-    },
-    {
-        name: "Email id"
-    },
-    {
-        name: "Edit Actions"
-    },
-    {
-        name: "Delete Actions"
-    },
-]
+const viewExmaTableList = ["No","Subject Name","Notes", "Email id","Edit Actions","Delete Actions"]
 
 const TeacherDashboard = () => {
     const navigate = useNavigate()
@@ -75,7 +56,7 @@ const TeacherDashboard = () => {
 
     const editExam = (id, subjectName, notes) => {
         console.log(id, subjectName, notes);
-        navigate(`/createExam`, { state: { subjectName: subjectName, notes: notes, id: id, toggle: false } })
+        navigate(`/teacher/createExam`, { state: { subjectName: subjectName, notes: notes, id: id, toggle: false } })
     }
 
     return (
@@ -91,8 +72,7 @@ const TeacherDashboard = () => {
                             <thead>
                                 <tr>
                                     {viewExmaTableList.map((element, index) => (
-                                        // <th key={index}>{element}</th>
-                                        <th key={index}>{element.name}</th>
+                                        <th key={index}>{element}</th>
                                     ))}
                                 </tr>
                             </thead>

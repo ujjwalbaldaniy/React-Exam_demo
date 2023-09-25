@@ -4,7 +4,7 @@ import Form from "../Components/Form";
 import { putStudentProfile } from "../Services/allApi";
 import { toast } from "react-toastify";
 import formValidation from "../utils/validation";
-
+import { studentNameChangeFieldList } from "../utils/description";
 
 const StudentNameChange = () => {
     const [studentName, setStudentName] = useState({
@@ -46,17 +46,7 @@ const StudentNameChange = () => {
         }
     }
 
-    const studentNameChangeList = [
-        {
-            name: "name",
-            type: "text",
-            placeholder: "name",
-            lable: "Name :- ",
-            showerrors: formErrors.name,
-            onChange: studentNameChange,
-            value: studentName.name,
-        },
-    ]
+    const studentNameChangeList = studentNameChangeFieldList(formErrors, studentNameChange, studentName)
 
     return (
         <>

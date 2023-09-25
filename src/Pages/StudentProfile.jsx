@@ -20,7 +20,7 @@ const StudentProfile = () => {
                             <img src={avatar} alt="avatar_image" className="avatar_image" />
                             <p>Name :- {localStorageData.name}</p>
                             <p>Email :- {localStorageData.email}</p>
-                            <button onClick={()=>navigate('/studentNameChange')}>Update Profile</button>
+                            <button onClick={()=>navigate('/student/nameChange')}>Update Profile</button>
                             <button onClick={() => navigate('/resetPassword')}>Reset Password</button>
                         </div>
                     </div>

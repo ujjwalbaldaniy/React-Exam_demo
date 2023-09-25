@@ -6,23 +6,7 @@ import '../Styles/viewStudentDetails.css'
 import avatar from '../images/avatar.jpeg'
 import Loader from "../Components/Loader";
 
-const studentSingleDetailList = [
-    {
-        name: "No"
-    },
-    {
-        name: "Subject Name"
-    },
-    {
-        name: "Rank"
-    },
-    {
-        name: "Result Status"
-    },
-    {
-        name: "Score"
-    },
-]
+const studentSingleDetailList = ["No", "Subject Name", "Rank", "Result Status", "Score"]
 
 const ViewStudentDeatils = () => {
     const params = useParams()
@@ -62,12 +46,12 @@ const ViewStudentDeatils = () => {
                                 ))}
                             </div>
                             <div className="singleData_exam">
-                                <h1 style={{color:"#0c7db1"}}>List of Given Exam</h1>
+                                <h1 style={{ color: "#0c7db1" }}>List of Given Exam</h1>
                                 <table>
                                     <thead>
                                         <tr >
                                             {studentSingleDetailList.map((element, index) => (
-                                                <th key={index}>{element.name}</th>
+                                                <th key={index}>{element}</th>
                                             ))}
                                         </tr>
                                     </thead>

@@ -4,6 +4,8 @@ import { userResetPassword } from "../Services/allApi";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import formValidation from "../utils/validation";
+import Navbar from "../Components/Navbar";
+import { resetPasswordFieldList } from "../utils/description";
 
 const ResetPassword = () => {
     const navigate = useNavigate()
@@ -44,9 +46,9 @@ const ResetPassword = () => {
                     console.log(res)
                     toast.success(res.data.message)
                     if (localStorageData.role === "teacher") {
-                        navigate('/teacherDashboard')
+                        navigate('/teacher/dashboard')
                     } else if (localStorageData.role === "student") {
-                        navigate('/studentDashboard')
+                        navigate('/student/dashboard')
                     }
                 })
                 .catch((error) => {
@@ -56,44 +58,16 @@ const ResetPassword = () => {
         }
     }
 
-    const inputs = [
-        {
-            name: "oldPassword",
-            type: "password",
-            placeholder: "old password",
-            lable: "Old Password :- ",
-            showerrors: formErrors.oldPassword,
-            onChange: resetPasswordChange,
-            value: resetPasswordField.oldPassword,
-        },
-        {
-            name: "Password",
-            type: "password",
-            placeholder: "password",
-            lable: "Password :- ",
-            showerrors: formErrors.Password,
-            onChange: resetPasswordChange,
-            value: resetPasswordField.Password,
-        },
-        {
-            name: "ConfirmPassword",
-            type: "password",
-            placeholder: "confirm password",
-            lable: "Confirm Password :- ",
-            showerrors: formErrors.ConfirmPassword,
-            onChange: resetPasswordChange,
-            value: resetPasswordField.ConfirmPassword,
-        },
-    ]
-
+    const resetPasswordList = resetPasswordFieldList(formErrors, resetPasswordChange, resetPasswordField)
 
     return (
         <>
+            <Navbar />
             <div className="employee-form">
                 <div className="login_container">
                     <h1 className="login_title">Reset Password</h1>
                     <form className="login_form" onSubmit={resetPasswordSubmit}>
-                        <Form handleChange={resetPasswordChange} inputField={resetPasswordField} inputs={inputs} />
+                        <Form handleChange={resetPasswordChange} inputField={resetPasswordField} inputs={resetPasswordList} />
                         <button type="submit" className="login_btn">Submit</button>
                     </form>
                 </div>
