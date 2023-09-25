@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from "react";
-import StudentSideBar from "./StudentSideBar";
 import { allExamForStudent } from "../Services/allApi";
 import { useNavigate } from "react-router-dom";
 import Loader from "../Components/Loader";
 
-const studnetTableList = ["No","Subject Name","Email", "Id", "Action", "Action"]
+const studnetTableList = ["No", "Subject Name", "Email", "Id", "Action", "Action"]
 
 const StudentDashboard = () => {
     const navigate = useNavigate()
@@ -33,9 +32,6 @@ const StudentDashboard = () => {
     return (
         <>
             <div className="teacher_container">
-                <div className="teacher_sidebar">
-                    <StudentSideBar />
-                </div>
                 {loading ? <Loader /> : (
                     <div className="teacher_mainbar">
                         <h1 className="title-heading">Student Dashboard</h1>

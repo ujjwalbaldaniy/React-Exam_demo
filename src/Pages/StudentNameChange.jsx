@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import StudentSideBar from "./StudentSideBar";
 import Form from "../Components/Form";
 import { putStudentProfile } from "../Services/allApi";
 import { toast } from "react-toastify";
@@ -51,9 +50,6 @@ const StudentNameChange = () => {
     return (
         <>
             <div className="teacher_container">
-                <div className="teacher_sidebar">
-                    <StudentSideBar />
-                </div>
                 <div className="teacher_mainbar">
                     <div className="profile_contailer">
                         <div className="employee-form">

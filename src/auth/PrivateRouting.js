@@ -1,13 +1,13 @@
 import { Navigate } from "react-router-dom";
 import { isLogginStudent, isLogginTeacher } from ".";
-import Navbar from "../Components/Navbar";
+import SideBar from "../Components/SideBar";
 
 const StudentPrivate = () => {
-  return isLogginStudent() ? <Navbar /> : <Navigate to="/signin" />;
+  return isLogginStudent() ? <SideBar /> : <Navigate to="/signin" />;
 };
 
 const TeacherPrivate = () => {
-  return isLogginTeacher() ? <Navbar /> : <Navigate to="/signin" />;
+  return isLogginTeacher() ? <SideBar /> : <Navigate to="/signin" />;
 };
 
 export { StudentPrivate, TeacherPrivate };

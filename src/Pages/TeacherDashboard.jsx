@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import '../Styles/teacherDeshboard.css'
-import TeacherSideBar from "../Components/TeacherSideBar";
 import { deleteExamApi, viewExam } from "../Services/allApi";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
@@ -62,9 +61,6 @@ const TeacherDashboard = () => {
     return (
         <>
             <div className="teacher_container">
-                <div className="teacher_sidebar">
-                    <TeacherSideBar />
-                </div>
                 {loading ? <Loader /> : (
                     <div className="teacher_mainbar">
                         <h1 className="title-heading">Teacher Dashboard</h1>

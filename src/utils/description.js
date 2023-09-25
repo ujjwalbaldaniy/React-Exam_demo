@@ -216,7 +216,7 @@ export const studentExamInputFieldList = (
       readOnly: true,
     },
     {
-      label: "Answers :- ",
+      label: "Options :- ",
       type: "radio",
       options: questions[activeQuestion]?.options,
       onChange: handleRadioBtnChange,

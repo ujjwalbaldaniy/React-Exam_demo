@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import TeacherSideBar from "../Components/TeacherSideBar";
 import { useNavigate } from "react-router-dom";
 import { verifiedStudentDataForGiveExam } from "../Services/allApi";
 import Loader from "../Components/Loader";
@@ -31,9 +30,6 @@ const VerifiedStudent = () => {
     return (
         <>
             <div className="teacher_container">
-                <div className="teacher_sidebar">
-                    <TeacherSideBar />
-                </div>
                 {loading ? <Loader /> : (
                     <div className="teacher_mainbar">
                         <div className="studentData_container">

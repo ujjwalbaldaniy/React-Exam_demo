@@ -1,5 +1,4 @@
 import React from "react";
-import TeacherSideBar from "../Components/TeacherSideBar";
 import avatar from '../images/avatar.jpeg'
 import '../Styles/teacherProfile.css'
 import { useNavigate } from "react-router-dom";
@@ -10,9 +9,6 @@ const TeacherProfile = () => {
     return (
         <>
             <div className="teacher_container">
-                <div className="teacher_sidebar">
-                    <TeacherSideBar />
-                </div>
                 <div className="teacher_mainbar">
                     <div className="profile_contailer">
                         <h1 className="title-heading">Your Profile</h1>

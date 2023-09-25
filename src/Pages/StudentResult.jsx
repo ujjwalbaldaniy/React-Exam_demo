@@ -1,6 +1,5 @@
 import React from "react";
 import { useLocation } from "react-router-dom";
-import StudentSideBar from "./StudentSideBar";
 
 const studentResultList = ["No", "Subject Name", "Rank", "Result Status", "Score"]
 
@@ -11,9 +10,6 @@ const StudentResult = () => {
     return (
         <>
             <div className="teacher_container">
-                <div className="teacher_sidebar">
-                    <StudentSideBar />
-                </div>
                 <div className="teacher_mainbar">
                     <div className="singleData_exam">
                         <h1 className="title-heading">Student Given Exam Result</h1>

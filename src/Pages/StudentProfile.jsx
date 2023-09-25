@@ -1,5 +1,4 @@
 import React from "react";
-import StudentSideBar from "./StudentSideBar";
 import avatar from '../images/avatar.jpeg'
 import { useNavigate } from "react-router-dom";
 
@@ -10,9 +9,6 @@ const StudentProfile = () => {
     return (
         <>
             <div className="teacher_container">
-                <div className="teacher_sidebar">
-                    <StudentSideBar />
-                </div>
                 <div className="teacher_mainbar">
                     <div className="profile_contailer">
                         <h1 className="title-heading">Student Profile</h1>

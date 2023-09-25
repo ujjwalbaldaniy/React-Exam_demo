@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import StudentSideBar from "./StudentSideBar";
 import { useNavigate, useParams } from "react-router-dom";
 import { postGiveExam, studentExamPaper } from "../Services/allApi";
 import StudentGiveExamForm from "./StudentGiveExamForm";
@@ -52,6 +51,9 @@ const StudentGiveExam = () => {
         if (activeQuestion > 0) {
             setActiveQuestion(activeQuestion - 1)
         }
+        setExamFormValidation({
+            answer: "",
+        })
     }
 
     const handleNext = () => {
@@ -137,9 +139,6 @@ const StudentGiveExam = () => {
     return (
         <>
             <div className="teacher_container">
-                <div className="teacher_sidebar">
-                    <StudentSideBar />
-                </div>
                 {loading ? <Loader /> : (
                     <div className="teacher_mainbar">
                         {toggle ? (

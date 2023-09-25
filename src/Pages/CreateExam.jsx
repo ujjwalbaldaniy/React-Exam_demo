@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import TeacherSideBar from "../Components/TeacherSideBar";
 import '../Styles/createExam.css'
 import { createExamPost, editExamApi, putExamDataApi } from "../Services/allApi";
 import { toast } from "react-toastify";
@@ -202,9 +201,6 @@ const CreateExam = () => {
     return (
         <>
             <div className="teacher_container">
-                <div className="teacher_sidebar">
-                    <TeacherSideBar />
-                </div>
                 <div className="teacher_mainbar">
                     <h1 className="title-heading">{location.state.toggle ? "Create" : "Edit"} Exam</h1>
                     <div className="exam_container">

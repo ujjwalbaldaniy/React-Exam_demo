@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import TeacherSideBar from "../Components/TeacherSideBar";
 import { viewStudentDetail } from "../Services/allApi";
 import '../Styles/viewStudentDetails.css'
 import avatar from '../images/avatar.jpeg'
@@ -30,9 +29,6 @@ const ViewStudentDeatils = () => {
     return (
         <>
             <div className="teacher_container">
-                <div className="teacher_sidebar">
-                    <TeacherSideBar />
-                </div>
                 {loading ? <Loader /> : (
                     <div className="teacher_mainbar">
                         <div className="singleData_container">
