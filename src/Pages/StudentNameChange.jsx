@@ -4,8 +4,10 @@ import { putStudentProfile } from "../Services/allApi";
 import { toast } from "react-toastify";
 import formValidation from "../utils/validation";
 import { studentNameChangeFieldList } from "../utils/description";
+import { useNavigate } from "react-router-dom";
 
 const StudentNameChange = () => {
+    const navigate = useNavigate()
     const [studentName, setStudentName] = useState({
         name: ""
     });
@@ -28,16 +30,14 @@ const StudentNameChange = () => {
 
     const studentNameSubmit = (e) => {
         e.preventDefault()
-        if (Object.values(studentName).some((value) => value === "")) {
-            toast.error("Please enter all Fields");
+        if (Object.values(studentName).some((value) => value.trim() === "")) {
+            toast.error("Please fill out all fields");
         } else {
             putStudentProfile(studentName)
                 .then((res) => {
                     console.log(res);
                     toast.success(res.data.message)
-                    setStudentName({
-                        name: ""
-                    })
+                    navigate('/student/profile')
                 }).catch((error) => {
                     console.log(error);
                     toast.error(error.response.data.message)

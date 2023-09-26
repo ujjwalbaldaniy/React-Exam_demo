@@ -29,8 +29,8 @@ const ForgotPassword = () => {
 
     const forgotPwSubmit = (e) => {
         e.preventDefault()
-        if (Object.values(forgotPwField).some((value) => value === "")) {
-            toast.error("Please enter all Fields");
+        if (Object.values(forgotPwField).some((value) => value.trim() === "")) {
+            toast.error("Please fill out all fields");
         } else {
             forgotPassword(forgotPwField)
                 .then((res) => {

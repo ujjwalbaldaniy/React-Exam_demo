@@ -38,8 +38,8 @@ const ResetPassword = () => {
 
     const resetPasswordSubmit = (e) => {
         e.preventDefault()
-        if (Object.values(resetPasswordField).some((value) => value === "")) {
-            toast.error("Please enter all Fields");
+        if (Object.values(resetPasswordField).some((value) => value.trim() === "")) {
+            toast.error("Please fill out all fields");
         } else {
             userResetPassword(resetPasswordField)
                 .then((res) => {

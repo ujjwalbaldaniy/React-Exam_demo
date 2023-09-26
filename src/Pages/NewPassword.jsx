@@ -33,8 +33,8 @@ const NewPassword = () => {
 
     const confirmPasswordSubmit = (e) => {
         e.preventDefault()
-        if (Object.values(confirmPasswordField).some((value) => value === "")) {
-            toast.error("Please enter all Fields");
+        if (Object.values(confirmPasswordField).some((value) => value.trim() === "")) {
+            toast.error("Please fill out all fields");
         } else {
             confirmPassword(location.search, confirmPasswordField)
                 .then((res) => {

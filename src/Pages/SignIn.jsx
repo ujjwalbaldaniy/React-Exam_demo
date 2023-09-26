@@ -33,8 +33,8 @@ const SignIn = () => {
 
     const handleSigninSubmit = (e) => {
         e.preventDefault()
-        if (Object.values(signinField).some((value) => value === "")) {
-            toast.error("Please enter all Fields");
+        if (Object.values(signinField).some((value) => value.trim() === "")) {
+            toast.error("Please fill out all fields");
         } else {
             postSigninData(signinField)
                 .then((res) => {

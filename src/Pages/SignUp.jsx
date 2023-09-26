@@ -56,7 +56,7 @@ const SignUp = () => {
         e.preventDefault()
         signupField.role = dropdown;
         if (Object.values(signupField).some((value) => value === "")) {
-            toast.error("Please enter all Fields");
+            toast.error("Please fill out all fields");
         } else {
             postSignupData(signupField)
                 .then((res) => {

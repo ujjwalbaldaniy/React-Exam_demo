@@ -1,10 +1,21 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import avatar from '../images/avatar.jpeg'
 import { useNavigate } from "react-router-dom";
+import { getStudentProfile } from "../Services/allApi";
 
 const StudentProfile = () => {
-    const localStorageData = JSON.parse(localStorage.getItem("user"));
     const navigate = useNavigate()
+    const [userInfo, setUserInfo] = useState("");
+
+    useEffect(() => {
+        getStudentProfile()
+            .then((res) => {
+                console.log(res.data.data);
+                setUserInfo(res.data.data)
+            }).catch((error) => {
+                console.log(error);
+            })
+    }, [])
 
     return (
         <>
@@ -14,9 +25,9 @@ const StudentProfile = () => {
                         <h1 className="title-heading">Student Profile</h1>
                         <div className="profile_div">
                             <img src={avatar} alt="avatar_image" className="avatar_image" />
-                            <p>Name :- {localStorageData.name}</p>
-                            <p>Email :- {localStorageData.email}</p>
-                            <button onClick={()=>navigate('/student/nameChange')}>Update Profile</button>
+                            <p>Name :- {userInfo.name}</p>
+                            <p>Email :- {userInfo.email}</p>
+                            <button onClick={() => navigate('/student/nameChange')}>Update Profile</button>
                             <button onClick={() => navigate('/resetPassword')}>Reset Password</button>
                         </div>
                     </div>

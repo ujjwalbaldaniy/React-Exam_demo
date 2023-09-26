@@ -4,8 +4,9 @@ import { createExamPost, editExamApi, putExamDataApi } from "../Services/allApi"
 import { toast } from "react-toastify";
 import { useLocation, useNavigate } from "react-router-dom";
 import CreateExamForm from "../Components/CreateExamForm";
-import createExamValidation from "../utils/createExamValidation";
+import createExamValidation from "../utils/validationForm";
 import { examInputFieldList } from "../utils/description";
+import newValidation from "../utils/newValidation";
 
 const CreateExam = () => {
     const navigate = useNavigate()
@@ -32,9 +33,10 @@ const CreateExam = () => {
 
     const handleExamStateChange = (e) => {
         const { name, value } = e.target
+        const error = newValidation(name, value);
         setExamFormValidation({
             ...examFormValidation,
-            [name]: "",
+            [name]: error,
         });
         setExamState({
             ...examState,

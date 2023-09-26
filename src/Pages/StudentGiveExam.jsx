@@ -5,7 +5,7 @@ import StudentGiveExamForm from "./StudentGiveExamForm";
 import Loader from "../Components/Loader";
 import { toast } from "react-toastify";
 import '../Styles/studentGiveExam.css'
-import { studentExamValidation } from "../utils/createExamValidation";
+import { studentExamValidation } from "../utils/validationForm";
 import { studentExamInputFieldList } from "../utils/description";
 
 const StudentGiveExam = () => {
