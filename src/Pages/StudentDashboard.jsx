@@ -41,7 +41,7 @@ const StudentDashboard = () => {
         setSelectedCategory(e.target.value);
     };
 
-    const filteredData = selectedCategory === 'All' ? examforStudent : selectedCategory === 'Declared' ? examforStudent.filter(item => item.Result[0]?.resultStatus === selectedCategory) : selectedCategory === 'Result' ? examforStudent.filter(item => item.Result[0]?.resultStatus !== selectedCategory) : null
+    const filteredData = selectedCategory === 'All' ? examforStudent : selectedCategory === 'Declared' ? examforStudent.filter(item => item.Result[0]?.resultStatus === selectedCategory) : selectedCategory === 'Result' ? examforStudent : null
 
     return (
         <>
@@ -56,14 +56,14 @@ const StudentDashboard = () => {
                                         {studnetTableList.map((element, index) => (
                                             <th key={index}>{element}</th>
                                         ))}
-                                        <th><label>
-                                            Filter by Category:
+                                        <th>
+                                            <label>Filter by Category:</label>
                                             <select value={selectedCategory} onChange={handleCategoryChange}>
                                                 <option value="All">All</option>
                                                 <option value="Declared">Result</option>
                                                 <option value="Result">Give Exam</option>
                                             </select>
-                                        </label></th>
+                                        </th>
                                     </tr>
                                 </thead>
                                 <tbody>

@@ -1,4 +1,5 @@
 import React from "react";
+import newValidation from "../utils/newValidation";
 
 const CreateExamForm = ({ examInputList, activeQuestion, questions, setQuestions, examFormValidation, setExamFormValidation }) => {
     return (
@@ -23,17 +24,21 @@ const CreateExamForm = ({ examInputList, activeQuestion, questions, setQuestions
                                                 />
                                                 <input
                                                     type="text"
+                                                    name="options"
                                                     placeholder={`Option ${optionIndex + 1}`}
                                                     value={option}
                                                     className="exam_option-text"
                                                     onChange={(e) => {
+                                                        console.log(e.target);
+                                                        const { name, value } = e.target
+                                                        const error = newValidation(name, value);
+                                                        setExamFormValidation({
+                                                            ...examFormValidation,
+                                                            [name]: error,
+                                                        });
                                                         const updatedQuestions = [...questions];
                                                         updatedQuestions[activeQuestion].options[optionIndex] = e.target.value;
                                                         setQuestions(updatedQuestions);
-                                                        setExamFormValidation({
-                                                            ...examFormValidation,
-                                                            options: "",
-                                                        });
                                                     }}
                                                 />
                                             </div>

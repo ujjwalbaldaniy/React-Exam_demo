@@ -24,6 +24,7 @@ export const examInputFieldList = (
       label: "Question :- ",
       type: "text",
       placeholder: "Question name",
+      name: "question",
       value: questions[activeQuestion]?.question,
       onChange: handleActiveQuestionChange,
       showerrors: examFormValidation.question,

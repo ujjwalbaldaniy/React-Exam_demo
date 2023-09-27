@@ -57,7 +57,6 @@ const StudentGiveExam = () => {
     }
 
     const handleNext = () => {
-        console.log(questions.length && questions[0]?.answer)
         const error = studentExamValidation(
             examFormValidation,
             setExamFormValidation,

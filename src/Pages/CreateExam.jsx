@@ -32,6 +32,7 @@ const CreateExam = () => {
     });
 
     const handleExamStateChange = (e) => {
+        console.log(e.target);
         const { name, value } = e.target
         const error = newValidation(name, value);
         setExamFormValidation({
@@ -45,16 +46,20 @@ const CreateExam = () => {
     }
 
     const handleActiveQuestionChange = (e) => {
+        console.log(e.target);
+        const { name, value } = e.target
+        const error = newValidation(name, value);
+        setExamFormValidation({
+            ...examFormValidation,
+            [name]: error,
+        });
         const allQuestions = [...questions];
         allQuestions[activeQuestion].question = e.target.value;
         setQuestions(allQuestions);
-        setExamFormValidation({
-            ...examFormValidation,
-            question: "",
-        });
     };
 
     const handleRadioBtnChange = (e) => {
+        console.log(e.target);
         const updatedRadioBtnQuestions = [...questions];
         updatedRadioBtnQuestions[activeQuestion].answer = e.target.value;
         setQuestions(updatedRadioBtnQuestions);
@@ -63,10 +68,10 @@ const CreateExam = () => {
         const selectedAnswersField = [...selectRadioBtnAnswer];
         selectedAnswersField[activeQuestion] = e.target.value;
         setSelectRadioBtnAnswer(selectedAnswersField);
-        setExamFormValidation({
-            ...examFormValidation,
-            answer: "",
-        });
+        // setExamFormValidation({
+        //     ...examFormValidation,
+        //     answer: "",
+        // });
     };
 
     const handlePrevious = () => {

@@ -12,6 +12,18 @@ const newValidation = (pattern, value) => {
       }
       break;
 
+    case "question":
+      if (value.trim() === "") {
+        return "Please Fill question Name";
+      }
+      break;
+
+    case "options":
+      if (value.trim() === "") {
+        return "Please Fill options Name";
+      }
+      break;
+
     default:
       return false;
   }
