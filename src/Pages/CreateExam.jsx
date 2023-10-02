@@ -12,17 +12,28 @@ const CreateExam = () => {
     const navigate = useNavigate()
     const location = useLocation()
     const [activeQuestion, setActiveQuestion] = useState(0)
-    const [examState, setExamState] = useState({
+    // const [examState, setExamState] = useState({
+    //     subjectName: "",
+    //     notes: "",
+    // })
+    // const [questions, setQuestions] = useState(Array.from({ length: 15 }, () => ({
+    //     question: "",
+    //     answer: "",
+    //     options: ["", "", "", ""],
+    // })));
+    // const [selectRadioBtnAnswer, setSelectRadioBtnAnswer] = useState(Array(15).fill(""));
+
+    const [examData, setExamData] = useState({
         subjectName: "",
         notes: "",
-    })
-    const [questions, setQuestions] = useState(Array.from({ length: 15 }, () => ({
-        question: "",
-        answer: "",
-        options: ["", "", "", ""],
-    })));
+        questions: Array.from({ length: 15 }, () => ({
+            question: "",
+            answer: "",
+            options: ["", "", "", ""],
+        }))
+    });
 
-    const { subjectName, notes } = examState
+    const { subjectName, notes } = examData
     const [examFormValidation, setExamFormValidation] = useState({
         subjectName: "",
         question: "",
@@ -32,38 +43,38 @@ const CreateExam = () => {
     });
 
     const handleExamStateChange = (e) => {
-        console.log(e.target);
         const { name, value } = e.target
         const error = newValidation(name, value);
         setExamFormValidation({
             ...examFormValidation,
             [name]: error,
         });
-        setExamState({
-            ...examState,
+        setExamData({
+            ...examData,
             [name]: value
         })
     }
 
     const handleActiveQuestionChange = (e) => {
-        console.log(e.target);
         const { name, value } = e.target
         const error = newValidation(name, value);
         setExamFormValidation({
             ...examFormValidation,
             [name]: error,
         });
-        const allQuestions = [...questions];
-        allQuestions[activeQuestion].question = e.target.value;
-        setQuestions(allQuestions);
+        const allQuestions = { ...examData };
+        allQuestions.questions[activeQuestion].question = e.target.value;
+        setExamData({ ...examData, ...allQuestions });
     };
 
     const handleRadioBtnChange = (e) => {
-        // debugger
-        console.log(e.target);
-        const updatedRadioBtnQuestions = [...questions];
-        updatedRadioBtnQuestions[activeQuestion].answer = e.target.value;
-        setQuestions(updatedRadioBtnQuestions);
+        setExamFormValidation({
+            ...examFormValidation,
+            answer: "",
+        });
+        const updatedRadioBtnQuestions = { ...examData };
+        updatedRadioBtnQuestions.questions[activeQuestion].answer = e.target.value;
+        setExamData({ ...examData, ...updatedRadioBtnQuestions });
     };
 
     const handlePrevious = () => {
@@ -83,9 +94,9 @@ const CreateExam = () => {
         const error = createExamValidation(
             examFormValidation,
             setExamFormValidation,
-            questions,
+            examData.questions,
             activeQuestion,
-            examState,
+            examData,
         );
         if (error) {
             if (activeQuestion < 14) {
@@ -96,7 +107,7 @@ const CreateExam = () => {
 
     const examEditData = {
         subjectName: subjectName,
-        questions: questions,
+        questions: examData.questions,
         notes: notes
     }
 
@@ -104,39 +115,48 @@ const CreateExam = () => {
         if (!location.state.toggle) {
             editExamApi(location.state.id)
                 .then((res) => {
-                    console.log(res.data.data.questions);
-                    setQuestions(res.data.data.questions)
-                    setExamState(location.state)
+                    // console.log(res.data.data.questions);
+                    // console.log(location.state);
+                    let { subjectName, notes } = location.state
+                    setExamData({
+                        ...examData,
+                        subjectName: subjectName,
+                        notes: notes,
+                        questions: res.data.data.questions
+                    })
                 })
                 .catch((error) => {
                     console.log(error);
                 })
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [location.state.id, location.state, location.state.toggle])
 
     const examFormData = {
         subjectName: subjectName,
-        questions: questions,
+        questions: examData.questions,
         notes: [notes]
     }
 
     const handleSubmit = (e) => {
+        console.log(examFormData);
+
         e.preventDefault()
         const error = createExamValidation(
             examFormValidation,
             setExamFormValidation,
-            questions,
+            examData.questions,
             activeQuestion,
-            examState,
+            examData,
         );
         if (error) {
             if (location.state.toggle) {
                 createExamPost(examFormData)
                     .then((res) => {
                         console.log(res);
-                        if (res.data.statusCode === 500) {
+                        if (res?.data?.statusCode === 500) {
                             toast.error(res.data.message)
-                        } else if (res.data.statusCode === 401) {
+                        } else if (res?.data?.statusCode === 401) {
                             toast.error(res.data.message)
                             navigate('/signin')
                         } else {
@@ -152,7 +172,7 @@ const CreateExam = () => {
                 putExamDataApi(examEditData, location.state.id)
                     .then((res) => {
                         console.log(res);
-                        if (res.data.statusCode === 500) {
+                        if (res?.data?.statusCode === 500) {
                             toast.error(res.data.message)
                         } else {
                             toast.success(res.data.message)
@@ -166,14 +186,16 @@ const CreateExam = () => {
         }
     }
 
-    const examInputList = examInputFieldList(subjectName,
+    const examInputList = examInputFieldList(
+        subjectName,
         handleExamStateChange,
         activeQuestion,
         examFormValidation,
-        questions,
+        examData.questions,
         handleActiveQuestionChange,
         handleRadioBtnChange,
-        notes)
+        notes
+    )
 
     const buttonList = [
         {
@@ -201,7 +223,7 @@ const CreateExam = () => {
                     <div className="exam_container">
                         <div>
                             <form>
-                                <CreateExamForm examInputList={examInputList} activeQuestion={activeQuestion} questions={questions} setQuestions={setQuestions} setExamFormValidation={setExamFormValidation} examFormValidation={examFormValidation} />
+                                <CreateExamForm examInputList={examInputList} activeQuestion={activeQuestion} examData={examData} setExamData={setExamData} setExamFormValidation={setExamFormValidation} examFormValidation={examFormValidation} />
                             </form>
                         </div>
                         <div className="exam-btn">

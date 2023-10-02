@@ -41,7 +41,21 @@ const StudentDashboard = () => {
         setSelectedCategory(e.target.value);
     };
 
-    const filteredData = selectedCategory === 'All' ? examforStudent : selectedCategory === 'Declared' ? examforStudent.filter(item => item.Result[0]?.resultStatus === selectedCategory) : selectedCategory === 'Result' ? examforStudent : null
+    let filteredData
+    switch (selectedCategory) {
+        case 'All':
+            filteredData = examforStudent
+            break;
+        case 'Declared':
+            filteredData = examforStudent.filter(item => item.Result[0]?.resultStatus === selectedCategory)
+            break;
+        case 'Result':
+            filteredData = examforStudent.filter(item => item.Result[0]?.resultStatus !== selectedCategory)
+            break;
+
+        default:
+            break;
+    }
 
     return (
         <>

@@ -3,12 +3,12 @@ const createExamValidation = (
   setExamFormValidation,
   questions,
   activeQuestion,
-  examState
+  examData
 ) => {
   const activeQues = questions[activeQuestion];
   let error = {};
 
-  if (!examState.subjectName) {
+  if (!examData.subjectName) {
     error.subjectName = "Please Fill Subject Name";
   }
 
@@ -40,7 +40,7 @@ const createExamValidation = (
     error.answer = "Please Select the Answer";
   }
 
-  if (!examState.notes) {
+  if (!examData.notes) {
     error.notes = "Please Fill Notes Name";
   }
   setExamFormValidation({ ...error });
@@ -52,11 +52,11 @@ export default createExamValidation;
 const studentExamValidation = (
   examFormValidation,
   setExamFormValidation,
-  questions,
+  selectRadioBtnAnswer,
   activeQuestion
 ) => {
   let error = {};
-  if (!questions[activeQuestion]?.answer) {
+  if (!selectRadioBtnAnswer[activeQuestion]) {
     error.answer = "Please Select the Answer";
   }
   setExamFormValidation({ ...error });
