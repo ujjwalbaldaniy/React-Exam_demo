@@ -7,12 +7,16 @@ const CreateExamForm = ({ examInputList, activeQuestion, questions, setQuestions
             <div className="exam_maincontainer">
                 <h3 className="title-heading1">Question {activeQuestion + 1}</h3>
                 {examInputList.map((input, index) => {
+                    console.log("inputField",input);
+                    
                     return (
                         <div key={index} className="exam-container">
                             {/* <label>{input.label}</label> */}
                             {input.type === "radio" ? (
                                 <div className="exam_radio-div">
                                     {input.options.map((option, optionIndex) => {
+                                        console.log("option", option);
+                                        
                                         return (
                                             <div key={optionIndex} className="exam_option-div">
                                                 <input
@@ -38,6 +42,8 @@ const CreateExamForm = ({ examInputList, activeQuestion, questions, setQuestions
                                                         });
                                                         const updatedQuestions = [...questions];
                                                         updatedQuestions[activeQuestion].options[optionIndex] = e.target.value;
+                                                        console.log(updatedQuestions);
+                                                        
                                                         setQuestions(updatedQuestions);
                                                     }}
                                                 />

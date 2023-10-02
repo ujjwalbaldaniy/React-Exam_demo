@@ -6,7 +6,6 @@ export const examInputFieldList = (
   questions,
   handleActiveQuestionChange,
   handleRadioBtnChange,
-  selectRadioBtnAnswer,
   notes
 ) => {
   return [
@@ -41,7 +40,7 @@ export const examInputFieldList = (
       label: "Answer :- ",
       type: "text",
       placeholder: "Answer",
-      value: selectRadioBtnAnswer[activeQuestion],
+      value: questions[activeQuestion]?.answer,
       readOnly: true,
       showerrors: examFormValidation.answer,
     },

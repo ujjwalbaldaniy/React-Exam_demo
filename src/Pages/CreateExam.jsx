@@ -21,7 +21,7 @@ const CreateExam = () => {
         answer: "",
         options: ["", "", "", ""],
     })));
-    const [selectRadioBtnAnswer, setSelectRadioBtnAnswer] = useState(Array(15).fill(""));
+
     const { subjectName, notes } = examState
     const [examFormValidation, setExamFormValidation] = useState({
         subjectName: "",
@@ -59,19 +59,11 @@ const CreateExam = () => {
     };
 
     const handleRadioBtnChange = (e) => {
+        // debugger
         console.log(e.target);
         const updatedRadioBtnQuestions = [...questions];
         updatedRadioBtnQuestions[activeQuestion].answer = e.target.value;
         setQuestions(updatedRadioBtnQuestions);
-
-        //for answer update
-        const selectedAnswersField = [...selectRadioBtnAnswer];
-        selectedAnswersField[activeQuestion] = e.target.value;
-        setSelectRadioBtnAnswer(selectedAnswersField);
-        // setExamFormValidation({
-        //     ...examFormValidation,
-        //     answer: "",
-        // });
     };
 
     const handlePrevious = () => {
@@ -94,7 +86,6 @@ const CreateExam = () => {
             questions,
             activeQuestion,
             examState,
-            selectRadioBtnAnswer
         );
         if (error) {
             if (activeQuestion < 14) {
@@ -115,7 +106,6 @@ const CreateExam = () => {
                 .then((res) => {
                     console.log(res.data.data.questions);
                     setQuestions(res.data.data.questions)
-                    setSelectRadioBtnAnswer(res.data.data.questions.map((item) => item.answer))
                     setExamState(location.state)
                 })
                 .catch((error) => {
@@ -138,7 +128,6 @@ const CreateExam = () => {
             questions,
             activeQuestion,
             examState,
-            selectRadioBtnAnswer
         );
         if (error) {
             if (location.state.toggle) {
@@ -184,7 +173,6 @@ const CreateExam = () => {
         questions,
         handleActiveQuestionChange,
         handleRadioBtnChange,
-        selectRadioBtnAnswer,
         notes)
 
     const buttonList = [

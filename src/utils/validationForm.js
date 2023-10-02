@@ -3,8 +3,7 @@ const createExamValidation = (
   setExamFormValidation,
   questions,
   activeQuestion,
-  examState,
-  selectRadioBtnAnswer
+  examState
 ) => {
   const activeQues = questions[activeQuestion];
   let error = {};
@@ -37,7 +36,7 @@ const createExamValidation = (
     }
   }
 
-  if (!selectRadioBtnAnswer[activeQuestion]) {
+  if (!questions[activeQuestion]?.answer) {
     error.answer = "Please Select the Answer";
   }
 
@@ -53,11 +52,11 @@ export default createExamValidation;
 const studentExamValidation = (
   examFormValidation,
   setExamFormValidation,
-  selectRadioBtnAnswer,
+  questions,
   activeQuestion
 ) => {
   let error = {};
-  if (!selectRadioBtnAnswer[activeQuestion]) {
+  if (!questions[activeQuestion]?.answer) {
     error.answer = "Please Select the Answer";
   }
   setExamFormValidation({ ...error });
